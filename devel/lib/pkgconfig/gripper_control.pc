@@ -1,0 +1,1 @@
+/home/ahao/catkin_ws/devel/.private/gripper_control/lib/pkgconfig/gripper_control.pc

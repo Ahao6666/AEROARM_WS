@@ -1,0 +1,1 @@
+/home/ahao/catkin_ws/devel/.private/sim2real/share/roseus/ros/sim2real/manifest.l

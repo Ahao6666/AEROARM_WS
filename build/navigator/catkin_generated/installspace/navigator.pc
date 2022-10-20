@@ -1,0 +1,8 @@
+prefix=/home/ahao/catkin_ws/install
+
+Name: navigator
+Description: Description of navigator
+Version: 0.0.0
+Cflags: -I${prefix}/include
+Libs: -L${prefix}/lib 
+Requires: mavros mavros_msgs roscpp message_runtime std_msgs

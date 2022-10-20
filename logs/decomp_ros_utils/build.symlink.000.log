@@ -1,0 +1,17 @@
+Symlinking /home/ahao/catkin_ws/devel/lib/libdecomp_rviz_plugins.so
+Symlinking /home/ahao/catkin_ws/devel/lib/pkgconfig/decomp_ros_utils.pc
+Symlinking /home/ahao/catkin_ws/devel/share/decomp_ros_utils/cmake/decomp_ros_utilsConfig-version.cmake
+Symlinking /home/ahao/catkin_ws/devel/share/decomp_ros_utils/cmake/decomp_ros_utilsConfig.cmake
+Cleaning: (/home/kantsky/simulator_flyingDelta/catkin_ws/devel/.private/decomp_ros_utils/cmake.lock, /home/kantsky/simulator_flyingDelta/catkin_ws/devel/./cmake.lock)
+Cleaning: (/home/kantsky/simulator_flyingDelta/catkin_ws/devel/.private/decomp_ros_utils/share/decomp_ros_utils/cmake/decomp_ros_utilsConfig-version.cmake, /home/kantsky/simulator_flyingDelta/catkin_ws/devel/share/decomp_ros_utils/cmake/decomp_ros_utilsConfig-version.cmake)
+Cleaning: (/home/kantsky/simulator_flyingDelta/catkin_ws/devel/.private/decomp_ros_utils/share/decomp_ros_utils/cmake/decomp_ros_utilsConfig.cmake, /home/kantsky/simulator_flyingDelta/catkin_ws/devel/share/decomp_ros_utils/cmake/decomp_ros_utilsConfig.cmake)
+Cleaning: (/home/kantsky/simulator_flyingDelta/catkin_ws/devel/.private/decomp_ros_utils/lib/libdecomp_rviz_plugins.so, /home/kantsky/simulator_flyingDelta/catkin_ws/devel/lib/libdecomp_rviz_plugins.so)
+Cleaning: (/home/kantsky/simulator_flyingDelta/catkin_ws/devel/.private/decomp_ros_utils/lib/pkgconfig/decomp_ros_utils.pc, /home/kantsky/simulator_flyingDelta/catkin_ws/devel/lib/pkgconfig/decomp_ros_utils.pc)
+Unlinking: /home/kantsky/simulator_flyingDelta/catkin_ws/devel/share/decomp_ros_utils/cmake/decomp_ros_utilsConfig-version.cmake
+Already unlinked: {}
+Unlinking: /home/kantsky/simulator_flyingDelta/catkin_ws/devel/share/decomp_ros_utils/cmake/decomp_ros_utilsConfig.cmake
+Already unlinked: {}
+Unlinking: /home/kantsky/simulator_flyingDelta/catkin_ws/devel/lib/libdecomp_rviz_plugins.so
+Already unlinked: {}
+Unlinking: /home/kantsky/simulator_flyingDelta/catkin_ws/devel/lib/pkgconfig/decomp_ros_utils.pc
+Already unlinked: {}

@@ -1,0 +1,25 @@
+Symlinking /home/ahao/catkin_ws/devel/lib/pkgconfig/decomp_test_node.pc
+Symlinking /home/ahao/catkin_ws/devel/lib/decomp_test_node/test_seed_decomp
+Symlinking /home/ahao/catkin_ws/devel/lib/decomp_test_node/test_path_decomp_3d
+Symlinking /home/ahao/catkin_ws/devel/lib/decomp_test_node/test_path_decomp_2d
+Symlinking /home/ahao/catkin_ws/devel/share/decomp_test_node/cmake/decomp_test_nodeConfig-version.cmake
+Symlinking /home/ahao/catkin_ws/devel/share/decomp_test_node/cmake/decomp_test_nodeConfig.cmake
+Cleaning: (/home/kantsky/simulator_flyingDelta/catkin_ws/devel/.private/decomp_test_node/cmake.lock, /home/kantsky/simulator_flyingDelta/catkin_ws/devel/./cmake.lock)
+Cleaning: (/home/kantsky/simulator_flyingDelta/catkin_ws/devel/.private/decomp_test_node/share/decomp_test_node/cmake/decomp_test_nodeConfig-version.cmake, /home/kantsky/simulator_flyingDelta/catkin_ws/devel/share/decomp_test_node/cmake/decomp_test_nodeConfig-version.cmake)
+Cleaning: (/home/kantsky/simulator_flyingDelta/catkin_ws/devel/.private/decomp_test_node/share/decomp_test_node/cmake/decomp_test_nodeConfig.cmake, /home/kantsky/simulator_flyingDelta/catkin_ws/devel/share/decomp_test_node/cmake/decomp_test_nodeConfig.cmake)
+Cleaning: (/home/kantsky/simulator_flyingDelta/catkin_ws/devel/.private/decomp_test_node/lib/pkgconfig/decomp_test_node.pc, /home/kantsky/simulator_flyingDelta/catkin_ws/devel/lib/pkgconfig/decomp_test_node.pc)
+Cleaning: (/home/kantsky/simulator_flyingDelta/catkin_ws/devel/.private/decomp_test_node/lib/decomp_test_node/test_seed_decomp, /home/kantsky/simulator_flyingDelta/catkin_ws/devel/lib/decomp_test_node/test_seed_decomp)
+Cleaning: (/home/kantsky/simulator_flyingDelta/catkin_ws/devel/.private/decomp_test_node/lib/decomp_test_node/test_path_decomp_2d, /home/kantsky/simulator_flyingDelta/catkin_ws/devel/lib/decomp_test_node/test_path_decomp_2d)
+Cleaning: (/home/kantsky/simulator_flyingDelta/catkin_ws/devel/.private/decomp_test_node/lib/decomp_test_node/test_path_decomp_3d, /home/kantsky/simulator_flyingDelta/catkin_ws/devel/lib/decomp_test_node/test_path_decomp_3d)
+Unlinking: /home/kantsky/simulator_flyingDelta/catkin_ws/devel/share/decomp_test_node/cmake/decomp_test_nodeConfig-version.cmake
+Already unlinked: {}
+Unlinking: /home/kantsky/simulator_flyingDelta/catkin_ws/devel/share/decomp_test_node/cmake/decomp_test_nodeConfig.cmake
+Already unlinked: {}
+Unlinking: /home/kantsky/simulator_flyingDelta/catkin_ws/devel/lib/pkgconfig/decomp_test_node.pc
+Already unlinked: {}
+Unlinking: /home/kantsky/simulator_flyingDelta/catkin_ws/devel/lib/decomp_test_node/test_seed_decomp
+Already unlinked: {}
+Unlinking: /home/kantsky/simulator_flyingDelta/catkin_ws/devel/lib/decomp_test_node/test_path_decomp_2d
+Already unlinked: {}
+Unlinking: /home/kantsky/simulator_flyingDelta/catkin_ws/devel/lib/decomp_test_node/test_path_decomp_3d
+Already unlinked: {}

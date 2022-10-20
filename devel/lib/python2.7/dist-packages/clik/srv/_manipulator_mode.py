@@ -1,0 +1,1 @@
+/home/ahao/catkin_ws/devel/.private/clik/lib/python2.7/dist-packages/clik/srv/_manipulator_mode.py

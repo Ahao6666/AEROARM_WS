@@ -1,0 +1,1 @@
+/home/ahao/catkin_ws/devel/.private/clik/share/clik/cmake/clikConfig.cmake

@@ -1,0 +1,102 @@
+[35m[1mScanning dependencies of target std_msgs_generate_messages_py[0m
+[  0%] Built target std_msgs_generate_messages_py
+[35m[1mScanning dependencies of target _task_plan_generate_messages_check_deps_traj_solver_msg[0m
+[  0%] Built target _task_plan_generate_messages_check_deps_traj_solver_msg
+[35m[1mScanning dependencies of target _task_plan_generate_messages_check_deps_traj_out_msg[0m
+[  0%] Built target _task_plan_generate_messages_check_deps_traj_out_msg
+[35m[1mScanning dependencies of target rosgraph_msgs_generate_messages_nodejs[0m
+[  0%] Built target rosgraph_msgs_generate_messages_nodejs
+[35m[1mScanning dependencies of target rosgraph_msgs_generate_messages_py[0m
+[  0%] Built target rosgraph_msgs_generate_messages_py
+[35m[1mScanning dependencies of target rosgraph_msgs_generate_messages_eus[0m
+[  0%] Built target rosgraph_msgs_generate_messages_eus
+[35m[1mScanning dependencies of target rosgraph_msgs_generate_messages_cpp[0m
+[  0%] Built target rosgraph_msgs_generate_messages_cpp
+[35m[1mScanning dependencies of target _catkin_empty_exported_target[0m
+[  0%] Built target _catkin_empty_exported_target
+[35m[1mScanning dependencies of target std_msgs_generate_messages_cpp[0m
+[  0%] Built target std_msgs_generate_messages_cpp
+[35m[1mScanning dependencies of target roscpp_generate_messages_py[0m
+[  0%] Built target roscpp_generate_messages_py
+[35m[1mScanning dependencies of target roscpp_generate_messages_nodejs[0m
+[  0%] Built target roscpp_generate_messages_nodejs
+[35m[1mScanning dependencies of target roscpp_generate_messages_eus[0m
+[  0%] Built target roscpp_generate_messages_eus
+[35m[1mScanning dependencies of target roscpp_generate_messages_cpp[0m
+[  0%] Built target roscpp_generate_messages_cpp
+[35m[1mScanning dependencies of target roscpp_generate_messages_lisp[0m
+[  0%] Built target roscpp_generate_messages_lisp
+[35m[1mScanning dependencies of target std_msgs_generate_messages_nodejs[0m
+[  0%] Built target std_msgs_generate_messages_nodejs
+[35m[1mScanning dependencies of target std_msgs_generate_messages_lisp[0m
+[  0%] Built target std_msgs_generate_messages_lisp
+[35m[1mScanning dependencies of target rosgraph_msgs_generate_messages_lisp[0m
+[  0%] Built target rosgraph_msgs_generate_messages_lisp
+[35m[1mScanning dependencies of target std_msgs_generate_messages_eus[0m
+[  0%] Built target std_msgs_generate_messages_eus
+[35m[1mScanning dependencies of target task_plan_generate_messages_lisp[0m
+[  4%] [34m[1mGenerating Lisp code from task_plan/traj_out_msg.srv[0m
+[  8%] [34m[1mGenerating Lisp code from task_plan/traj_solver_msg.srv[0m
+[  8%] Built target task_plan_generate_messages_lisp
+[35m[1mScanning dependencies of target task_plan_generate_messages_py[0m
+[ 12%] [34m[1mGenerating Python code from SRV task_plan/traj_out_msg[0m
+[ 16%] [34m[1mGenerating Python code from SRV task_plan/traj_solver_msg[0m
+[ 20%] [34m[1mGenerating Python srv __init__.py for task_plan[0m
+[ 20%] Built target task_plan_generate_messages_py
+[35m[1mScanning dependencies of target task_plan_generate_messages_cpp[0m
+[ 25%] [34m[1mGenerating C++ code from task_plan/traj_out_msg.srv[0m
+[ 29%] [34m[1mGenerating C++ code from task_plan/traj_solver_msg.srv[0m
+[ 29%] Built target task_plan_generate_messages_cpp
+[35m[1mScanning dependencies of target task_plan_generate_messages_nodejs[0m
+[ 33%] [34m[1mGenerating Javascript code from task_plan/traj_out_msg.srv[0m
+[ 37%] [34m[1mGenerating Javascript code from task_plan/traj_solver_msg.srv[0m
+[ 37%] Built target task_plan_generate_messages_nodejs
+[35m[1mScanning dependencies of target task_plan_generate_messages_eus[0m
+[ 41%] [34m[1mGenerating EusLisp code from task_plan/traj_out_msg.srv[0m
+[ 45%] [34m[1mGenerating EusLisp code from task_plan/traj_solver_msg.srv[0m
+[ 50%] [34m[1mGenerating EusLisp manifest code for task_plan[0m
+WARNING: Package name "testPub" does not follow the naming conventions. It should start with a lower case letter and only contain lower case letters, digits, underscores, and dashes.
+WARNING: Package name "testPub" does not follow the naming conventions. It should start with a lower case letter and only contain lower case letters, digits, underscores, and dashes.
+[ 50%] Built target task_plan_generate_messages_eus
+[35m[1mScanning dependencies of target pathfinder[0m
+[ 54%] [32mBuilding CXX object CMakeFiles/pathfinder.dir/src/pathfinder.cpp.o[0m
+[ 58%] [32mBuilding CXX object CMakeFiles/pathfinder.dir/src/a_star.cpp.o[0m
+In file included from [01m[K/opt/ros/melodic/include/ros/ros.h:40:0[m[K,
+                 from [01m[K/home/ahao/catkin_ws/src/task_plan/include/a_star.h:2[m[K,
+                 from [01m[K/home/ahao/catkin_ws/src/task_plan/src/a_star.cpp:1[m[K:
+[01m[K/home/ahao/catkin_ws/src/task_plan/src/a_star.cpp:[m[K In member function ‘[01m[Kstd::vector<GridNode*> gridPathFinder::getVisitedNodes()[m[K’:
+[01m[K/opt/ros/melodic/include/ros/console.h:348:176:[m[K [01;35m[Kwarning: [m[Kformat ‘[01m[K%d[m[K’ expects argument of type ‘[01m[Kint[m[K’, but argument 8 has type ‘[01m[Kstd::vector<GridNode*>::size_type {aka long unsigned int}[m[K’ [[01;35m[K-Wformat=[m[K]
+     ::ros::console::print(filter, __rosconsole_define_location__loc.logger_, __rosconsole_define_location__loc.level_, __FILE__, __LINE__, __ROSCONSOLE_FUNCTION__, __VA_ARGS__[01;35m[K)[m[K
+                                                                                                                                                                                [01;35m[K^[m[K
+[01m[K/opt/ros/melodic/include/ros/console.h:351:5:[m[K [01;36m[Knote: [m[Kin expansion of macro ‘[01m[KROSCONSOLE_PRINT_AT_LOCATION_WITH_FILTER[m[K’
+     [01;36m[KROSCONSOLE_PRINT_AT_LOCATION_WITH_FILTER[m[K(NULL, __VA_ARGS__)
+     [01;36m[K^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[m[K
+[01m[K/opt/ros/melodic/include/ros/console.h:387:7:[m[K [01;36m[Knote: [m[Kin expansion of macro ‘[01m[KROSCONSOLE_PRINT_AT_LOCATION[m[K’
+       [01;36m[KROSCONSOLE_PRINT_AT_LOCATION[m[K(__VA_ARGS__); \
+       [01;36m[K^~~~~~~~~~~~~~~~~~~~~~~~~~~~[m[K
+[01m[K/opt/ros/melodic/include/ros/console.h:572:35:[m[K [01;36m[Knote: [m[Kin expansion of macro ‘[01m[KROS_LOG_COND[m[K’
+ #define ROS_LOG(level, name, ...) [01;36m[KROS_LOG_COND[m[K(true, level, name, __VA_ARGS__)
+                                   [01;36m[K^~~~~~~~~~~~[m[K
+[01m[K/opt/ros/melodic/include/rosconsole/macros_generated.h:162:23:[m[K [01;36m[Knote: [m[Kin expansion of macro ‘[01m[KROS_LOG[m[K’
+ #define ROS_WARN(...) [01;36m[KROS_LOG[m[K(::ros::console::levels::Warn, ROSCONSOLE_DEFAULT_NAME, __VA_ARGS__)
+                       [01;36m[K^~~~~~~[m[K
+[01m[K/home/ahao/catkin_ws/src/task_plan/src/a_star.cpp:159:5:[m[K [01;36m[Knote: [m[Kin expansion of macro ‘[01m[KROS_WARN[m[K’
+     [01;36m[KR[m[KOS_WARN("visited_nodes size : %d", visited_nodes.size());
+     [01;36m[K^[m[K
+[35m[1mScanning dependencies of target task_plan_generate_messages[0m
+[ 58%] Built target task_plan_generate_messages
+[35m[1mScanning dependencies of target traj_solver[0m
+[ 62%] [32mBuilding CXX object CMakeFiles/traj_solver.dir/src/bezier_base.cpp.o[0m
+[ 66%] [32m[1mLinking CXX executable /home/ahao/catkin_ws/devel/.private/task_plan/lib/task_plan/pathfinder[0m
+[ 66%] Built target pathfinder
+[ 70%] [32mBuilding CXX object CMakeFiles/traj_solver.dir/src/trajectory_solver.cpp.o[0m
+[ 75%] [32mBuilding CXX object CMakeFiles/traj_solver.dir/src/log4z.cpp.o[0m
+[35m[1mScanning dependencies of target traj_gen[0m
+[ 79%] [32mBuilding CXX object CMakeFiles/traj_gen.dir/src/bezier_base.cpp.o[0m
+[ 83%] [32mBuilding CXX object CMakeFiles/traj_solver.dir/src/end_effector_planning.cpp.o[0m
+[ 87%] [32mBuilding CXX object CMakeFiles/traj_gen.dir/src/trajectory_generator.cpp.o[0m
+[ 91%] [32mBuilding CXX object CMakeFiles/traj_solver.dir/src/auto_pick.cpp.o[0m
+[ 95%] [32m[1mLinking CXX executable /home/ahao/catkin_ws/devel/.private/task_plan/lib/task_plan/traj_gen[0m
+[ 95%] Built target traj_gen
+[100%] [32m[1mLinking CXX executable /home/ahao/catkin_ws/devel/.private/task_plan/lib/task_plan/traj_solver[0m
+[100%] Built target traj_solver

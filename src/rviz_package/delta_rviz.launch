@@ -1,0 +1,56 @@
+<?xml version="1.1" ?>
+<launch>
+	<arg name="model" default="/home/kantsky/beifen/xzt/sim_aema/ros_sim/src/rviz_package/result_model1.urdf"/>
+        <param name="use_sim_time" value="true"/>
+
+ 	<arg name="database_path"     default="rtabmap.db"/>
+  	<arg name="rgbd_odometry"     default="false"/>
+  	<arg name="rtabmapviz"        default="false"/>
+  	<arg name="localization"      default="false"/>
+  	<arg name="simulation"        default="false"/>
+  	<arg name="sw_registered"     default="false"/>
+  	<arg     if="$(arg localization)" name="args"  default=""/>
+  	<arg unless="$(arg localization)" name="args"  default="--delete_db_on_start"/>
+
+  	<arg     if="$(arg simulation)" name="rgb_topic"   default="/rgb/image"/>
+  	<arg     if="$(arg simulation)" name="depth_topic" default="/depth/image"/>
+ 	<arg name="camera_info_topic" default="/rgb/camera_info"/>
+  
+  	<arg name="wait_for_transform"  default="0.2"/> 
+
+
+  	<arg name="gui" default="true" />
+  	<arg name="rvizconfig" default="$(find urdf_tutorial)/rviz/urdf.rviz" />
+
+ 		<param name="robot_description"  command="$(find xacro)/xacro.py $(arg model)" />
+
+<!--  <node name="odom_publisher" pkg="odom_publisher" type="odom_publisher" />-->
+<!--  <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" />-->
+  	<node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" />
+  	<node name="rviz" pkg="rviz" type="rviz" args="-d /home/kantsky/beifen/xzt/sim_aema/ros_sim/src/rviz_package/1029.rviz" required="true" />
+
+  	<node pkg="tf" type="static_transform_publisher" name="camera_link_broadcaster" args="0.1 0 0.035 -1.5707963 0 -1.5707963 base_link camera_link 50 " />
+<!--  	<node pkg="tf" type="static_transform_publisher" name="camera_link_broadcaster" args="0 0 0.1  0 0 -0 base_link velodyne 50 " />-->
+  	<node pkg="tf" type="static_transform_publisher" name="laser_link_broadcaster" args="0 0 0.06  0 0 -0 base_link velodyne_VLP_16::velodyne   50 " />
+
+<!--  	<node pkg="tf" type="static_transform_publisher" name="map_link_broadcaster" args="0.000513010190234 0.16664569019 1.55493577457  0 0 0 map odom 50 " />-->
+<!--  	<node pkg="tf" type="static_transform_publisher" name="map_link_broadcaster" args="0 0 1.861  0 0 0 map odom 50 " />-->
+  	<node pkg="tf" type="static_transform_publisher" name="map_link_broadcaster" args="0 0 1.72  0 0 0 map odom 50 " />
+<!--  	<node pkg="tf" type="static_transform_publisher" name="map_link_broadcaster" args="0 0 1.83  0 0 0 map odom 50 " 0901/>-->
+<!--  	<node pkg="tf" type="static_transform_publisher" name="map_link_broadcaster" args="0 0 1.554  0 0 0 map odom 50 " />-->
+  	<node pkg="tf" type="static_transform_publisher" name="world_link_broadcaster" args="0 0 0  0 0 0 map world 50 " />
+
+
+
+
+  	<node pkg="testPub" type="testRviz" name="testRviz"/>
+
+
+
+	<node pkg="point_cloud_converter" name="point_cloud_converter" type="point_cloud_converter_node" >
+		<remap from="points2_in" to="octomap_point_cloud_centers"/>
+		<remap from="points_out" to="point_cloud_decomp" />
+	</node>
+
+
+</launch>

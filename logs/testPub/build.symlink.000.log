@@ -1,0 +1,17 @@
+Symlinking /home/ahao/catkin_ws/devel/lib/pkgconfig/testPub.pc
+Symlinking /home/ahao/catkin_ws/devel/lib/testPub/testRviz
+Symlinking /home/ahao/catkin_ws/devel/share/testPub/cmake/testPubConfig.cmake
+Symlinking /home/ahao/catkin_ws/devel/share/testPub/cmake/testPubConfig-version.cmake
+Cleaning: (/home/kantsky/simulator_flyingDelta/catkin_ws/devel/.private/testPub/cmake.lock, /home/kantsky/simulator_flyingDelta/catkin_ws/devel/./cmake.lock)
+Cleaning: (/home/kantsky/simulator_flyingDelta/catkin_ws/devel/.private/testPub/share/testPub/cmake/testPubConfig.cmake, /home/kantsky/simulator_flyingDelta/catkin_ws/devel/share/testPub/cmake/testPubConfig.cmake)
+Cleaning: (/home/kantsky/simulator_flyingDelta/catkin_ws/devel/.private/testPub/share/testPub/cmake/testPubConfig-version.cmake, /home/kantsky/simulator_flyingDelta/catkin_ws/devel/share/testPub/cmake/testPubConfig-version.cmake)
+Cleaning: (/home/kantsky/simulator_flyingDelta/catkin_ws/devel/.private/testPub/lib/testPub/testRviz, /home/kantsky/simulator_flyingDelta/catkin_ws/devel/lib/testPub/testRviz)
+Cleaning: (/home/kantsky/simulator_flyingDelta/catkin_ws/devel/.private/testPub/lib/pkgconfig/testPub.pc, /home/kantsky/simulator_flyingDelta/catkin_ws/devel/lib/pkgconfig/testPub.pc)
+Unlinking: /home/kantsky/simulator_flyingDelta/catkin_ws/devel/share/testPub/cmake/testPubConfig.cmake
+Already unlinked: {}
+Unlinking: /home/kantsky/simulator_flyingDelta/catkin_ws/devel/share/testPub/cmake/testPubConfig-version.cmake
+Already unlinked: {}
+Unlinking: /home/kantsky/simulator_flyingDelta/catkin_ws/devel/lib/testPub/testRviz
+Already unlinked: {}
+Unlinking: /home/kantsky/simulator_flyingDelta/catkin_ws/devel/lib/pkgconfig/testPub.pc
+Already unlinked: {}

@@ -1,0 +1,1 @@
+/home/ahao/catkin_ws/devel/.private/clik/share/common-lisp/ros/clik/msg/action.lisp

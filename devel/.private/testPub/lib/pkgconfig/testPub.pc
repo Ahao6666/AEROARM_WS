@@ -1,0 +1,8 @@
+prefix=/home/ahao/catkin_ws/devel/.private/testPub
+
+Name: testPub
+Description: Description of testPub
+Version: 0.0.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 

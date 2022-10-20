@@ -1,0 +1,32 @@
+<launch>   
+    <node name="clik"  pkg="clik" type="clik" output="screen">
+        <param name="yaw_offset" type="double" value="-1.571589"/>
+        <param name="x_offset" type="double" value="0.010374"/>
+        <param name="y_offset" type="double" value="-0.026177"/> 
+        <param name="z_offset" type="double" value="0.140462"/> 
+        <param name="x_min" type="double" value="-4"/>
+        <param name="x_max" type="double" value="4"/>
+        <param name="y_min" type="double" value="-3"/>
+        <param name="y_max" type="double" value="3"/>
+        <param name="z_min" type="double" value="0.02"/>
+        <param name="z_max" type="double" value="6.1"/>
+        <param name="vel_vertical_max" type="double" value="0.2"/>
+        <param name="vel_horizion_max" type="double" value="0.2"/>
+        <param name="acc_vertica_max" type="double" value="2"/>
+        <param name="acc_horizion_max" type="double" value="2"/>
+        <param name="delta_x_min" type="double" value="-0.08"/>
+        <param name="delta_x_max" type="double" value="0.08"/>
+        <param name="delta_y_min" type="double" value="-0.08"/>
+        <param name="delta_y_max" type="double" value="0.08"/>
+        <param name="delta_z_min" type="double" value="-0.310"/>
+        <param name="delta_z_max" type="double" value="-0.140"/>
+        <param name="delta_vel" type="double" value="1"/>
+        <param name="delta_acc" type="double" value="3"/>
+    </node>
+    <node name="task_plan"  pkg="task_plan" type="traj_gen" output="screen">
+    </node>
+    <include file="$(find off_mission)/launch/off_mission.launch">
+    </include>
+    <include file="$(find navigator)/launch/navigator.launch">
+    </include>
+</launch>

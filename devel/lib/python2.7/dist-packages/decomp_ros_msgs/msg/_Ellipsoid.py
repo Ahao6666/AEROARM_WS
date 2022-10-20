@@ -1,0 +1,1 @@
+/home/ahao/catkin_ws/devel/.private/decomp_ros_msgs/lib/python2.7/dist-packages/decomp_ros_msgs/msg/_Ellipsoid.py

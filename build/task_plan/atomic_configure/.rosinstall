@@ -1,0 +1,2 @@
+- setup-file:
+    local-name: /home/ahao/catkin_ws/devel/.private/task_plan/setup.sh

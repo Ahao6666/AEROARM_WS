@@ -1,0 +1,1 @@
+/home/ahao/catkin_ws/devel/.private/bag_plot/lib/pkgconfig/bag_plot.pc

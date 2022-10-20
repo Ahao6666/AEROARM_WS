@@ -1,0 +1,1 @@
+/home/ahao/catkin_ws/devel/.private/clik/share/gennodejs/ros/clik/msg/position_pub.js

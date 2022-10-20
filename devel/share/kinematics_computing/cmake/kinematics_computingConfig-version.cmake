@@ -1,0 +1,1 @@
+/home/ahao/catkin_ws/devel/.private/kinematics_computing/share/kinematics_computing/cmake/kinematics_computingConfig-version.cmake

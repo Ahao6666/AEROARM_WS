@@ -1,0 +1,1 @@
+/home/ahao/catkin_ws/devel/.private/calibration/share/roseus/ros/calibration/srv/manipulator_mode.l

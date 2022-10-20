@@ -1,0 +1,21 @@
+[ 25%] Built target test_seed_decomp
+[ 50%] Built target test_line_segment
+[ 75%] Built target test_iterative_decomp
+[100%] Built target test_ellipsoid_decomp
+[36mInstall the project...[0m
+-- Install configuration: "Release"
+-- Up-to-date: /home/ahao/catkin_ws/devel/share/decomp_util/cmake/decomp_utilConfig.cmake
+-- Up-to-date: /home/ahao/catkin_ws/devel/share/decomp_util/cmake/decomp_utilConfigVersion.cmake
+-- Up-to-date: /home/ahao/catkin_ws/devel/include/decomp_basis
+-- Up-to-date: /home/ahao/catkin_ws/devel/include/decomp_basis/data_type.h
+-- Up-to-date: /home/ahao/catkin_ws/devel/include/decomp_basis/data_utils.h
+-- Up-to-date: /home/ahao/catkin_ws/devel/include/decomp_geometry
+-- Up-to-date: /home/ahao/catkin_ws/devel/include/decomp_geometry/geometric_utils.h
+-- Up-to-date: /home/ahao/catkin_ws/devel/include/decomp_geometry/polyhedron.h
+-- Up-to-date: /home/ahao/catkin_ws/devel/include/decomp_geometry/ellipsoid.h
+-- Up-to-date: /home/ahao/catkin_ws/devel/include/decomp_util
+-- Up-to-date: /home/ahao/catkin_ws/devel/include/decomp_util/iterative_decomp.h
+-- Up-to-date: /home/ahao/catkin_ws/devel/include/decomp_util/line_segment.h
+-- Up-to-date: /home/ahao/catkin_ws/devel/include/decomp_util/seed_decomp.h
+-- Up-to-date: /home/ahao/catkin_ws/devel/include/decomp_util/decomp_base.h
+-- Up-to-date: /home/ahao/catkin_ws/devel/include/decomp_util/ellipsoid_decomp.h

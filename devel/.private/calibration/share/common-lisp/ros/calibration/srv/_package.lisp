@@ -1,0 +1,10 @@
+(cl:defpackage calibration-srv
+  (:use )
+  (:export
+   "MANIPULATOR_MODE"
+   "<MANIPULATOR_MODE-REQUEST>"
+   "MANIPULATOR_MODE-REQUEST"
+   "<MANIPULATOR_MODE-RESPONSE>"
+   "MANIPULATOR_MODE-RESPONSE"
+  ))
+

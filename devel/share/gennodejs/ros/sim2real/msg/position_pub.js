@@ -1,0 +1,1 @@
+/home/ahao/catkin_ws/devel/.private/sim2real/share/gennodejs/ros/sim2real/msg/position_pub.js

@@ -1,0 +1,4 @@
+[ 25%] Built target test_seed_decomp
+[ 50%] Built target test_line_segment
+[ 75%] Built target test_iterative_decomp
+[100%] Built target test_ellipsoid_decomp
