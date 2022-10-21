@@ -12,7 +12,7 @@ int main(int argc, char **argv)
     ros::init(argc, argv, "gripper_control_publish");
 
     // 创建节点句柄
-    ros::NodeHandle g1,g2;;
+    ros::NodeHandle g1,g2;
 
     // 创建一个Publisher，发布名为/joint/gripper1/position_cmd的topic，消息类型为std_msgs::Float32，队列长度10
     ros::Publisher gripper1_pub = g1.advertise<std_msgs::Float32>("/joint/gripper1/position_cmd", 10);
