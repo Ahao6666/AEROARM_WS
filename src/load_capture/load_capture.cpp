@@ -34,16 +34,16 @@ int main(int argc, char **argv)
         gripper2_pub.publish(gripper2_pos);
         loop_rate.sleep();
         
-        delta1_pos.data = 0;
-        delta2_pos.data = 0;
-        delta3_pos.data = 0;
+        delta1_pos.data = 0.5;
+        delta2_pos.data = 0.5;
+        delta3_pos.data = 0.5;
         delta1_pub.publish(delta1_pos);
         delta2_pub.publish(delta2_pos);
         delta3_pub.publish(delta3_pos);
         loop_rate.sleep();
         
-        gripper1_pos.data = 0;
-        gripper2_pos.data = 0;
+        gripper1_pos.data = -0.3;
+        gripper2_pos.data = -0.3;
         gripper1_pub.publish(gripper1_pos);
         gripper2_pub.publish(gripper2_pos);
         loop_rate.sleep();
