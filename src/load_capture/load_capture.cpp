@@ -27,17 +27,12 @@ int main(int argc, char **argv)
 
     while (ros::ok())
     {
-        gripper1_pos.data = 1;
-        gripper2_pos.data = 1;
-        gripper1_pub.publish(gripper1_pos);
-        gripper2_pub.publish(gripper2_pos);
-        loop_rate.sleep();
-
         gripper1_pos.data = -0.3;
         gripper2_pos.data = -0.3;
         gripper1_pub.publish(gripper1_pos);
         gripper2_pub.publish(gripper2_pos);
         loop_rate.sleep();
+
 
         delta1_pos.data = -1;
         delta2_pos.data = -1;
@@ -55,6 +50,11 @@ int main(int argc, char **argv)
         delta3_pub.publish(delta3_pos);
         loop_rate.sleep();
 
+        gripper1_pos.data = 1;
+        gripper2_pos.data = 1;
+        gripper1_pub.publish(gripper1_pos);
+        gripper2_pub.publish(gripper2_pos);
+        loop_rate.sleep();
         // 按照循环频率延时
         ROS_INFO("Publsh load capture test ");
 
