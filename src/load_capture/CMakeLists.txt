@@ -23,3 +23,6 @@ include_directories(
 add_executable(load_capture_gripper3 load_capture_gripper3.cpp)
 target_link_libraries(load_capture_gripper3 ${catkin_LIBRARIES})
 
+add_executable(load_capture_gripper2 load_capture_gripper2.cpp)
+target_link_libraries(load_capture_gripper2 ${catkin_LIBRARIES})
+
