@@ -1,4 +1,5 @@
 /home/ahao/catkin_ws/build/load_capture/CMakeFiles/install/strip.dir
+/home/ahao/catkin_ws/build/load_capture/CMakeFiles/rosgraph_msgs_generate_messages_nodejs.dir
 /home/ahao/catkin_ws/build/load_capture/CMakeFiles/rosgraph_msgs_generate_messages_py.dir
 /home/ahao/catkin_ws/build/load_capture/CMakeFiles/std_msgs_generate_messages_eus.dir
 /home/ahao/catkin_ws/build/load_capture/CMakeFiles/rosgraph_msgs_generate_messages_lisp.dir
@@ -20,6 +21,7 @@
 /home/ahao/catkin_ws/build/load_capture/CMakeFiles/geometry_msgs_generate_messages_nodejs.dir
 /home/ahao/catkin_ws/build/load_capture/CMakeFiles/clean_test_results.dir
 /home/ahao/catkin_ws/build/load_capture/CMakeFiles/sensor_msgs_generate_messages_py.dir
+/home/ahao/catkin_ws/build/load_capture/CMakeFiles/load_capture_gripper3.dir
 /home/ahao/catkin_ws/build/load_capture/CMakeFiles/std_msgs_generate_messages_lisp.dir
 /home/ahao/catkin_ws/build/load_capture/CMakeFiles/sensor_msgs_generate_messages_cpp.dir
 /home/ahao/catkin_ws/build/load_capture/CMakeFiles/sensor_msgs_generate_messages_eus.dir
@@ -31,8 +33,6 @@
 /home/ahao/catkin_ws/build/load_capture/CMakeFiles/install/local.dir
 /home/ahao/catkin_ws/build/load_capture/CMakeFiles/doxygen.dir
 /home/ahao/catkin_ws/build/load_capture/CMakeFiles/sensor_msgs_generate_messages_lisp.dir
-/home/ahao/catkin_ws/build/load_capture/CMakeFiles/rosgraph_msgs_generate_messages_nodejs.dir
-/home/ahao/catkin_ws/build/load_capture/CMakeFiles/load_capture.dir
 /home/ahao/catkin_ws/build/load_capture/CMakeFiles/roscpp_generate_messages_cpp.dir
 /home/ahao/catkin_ws/build/load_capture/CMakeFiles/rebuild_cache.dir
 /home/ahao/catkin_ws/build/load_capture/CMakeFiles/sensor_msgs_generate_messages_nodejs.dir

@@ -6,7 +6,7 @@
 
 #IncludeRegexTransform: 
 
-/home/ahao/catkin_ws/src/load_capture/load_capture.cpp
+/home/ahao/catkin_ws/src/load_capture/load_capture_gripper3.cpp
 ros/ros.h
 -
 std_msgs/Float32.h

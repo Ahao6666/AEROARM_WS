@@ -306,12 +306,6 @@ googletest-distribution_BINARY_DIR:STATIC=/home/ahao/catkin_ws/build/load_captur
 googletest-distribution_SOURCE_DIR:STATIC=/usr/src/googletest
 
 //Value Computed by CMake
-gripper_control_BINARY_DIR:STATIC=/home/ahao/catkin_ws/build/load_capture
-
-//Value Computed by CMake
-gripper_control_SOURCE_DIR:STATIC=/home/ahao/catkin_ws/src/load_capture
-
-//Value Computed by CMake
 gtest_BINARY_DIR:STATIC=/home/ahao/catkin_ws/build/load_capture/gtest/googlemock/gtest
 
 //Dependencies for the target

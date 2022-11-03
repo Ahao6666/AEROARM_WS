@@ -399,9 +399,6 @@ nav_msgs_DIR:PATH=/opt/ros/melodic/share/nav_msgs/cmake
 //Value Computed by CMake
 navigator_BINARY_DIR:STATIC=/home/ahao/catkin_ws/build/navigator
 
-//Dependencies for target
-navigator_LIB_DEPENDS:STATIC=
-
 //Value Computed by CMake
 navigator_SOURCE_DIR:STATIC=/home/ahao/catkin_ws/src/navigator
 
