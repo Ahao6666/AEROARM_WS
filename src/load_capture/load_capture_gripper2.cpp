@@ -18,9 +18,9 @@ int main(int argc, char **argv)
     // 创建一个Publisher，发布名为/joint/gripper1/position_cmd的topic，消息类型为std_msgs::Float32，队列长度10
     ros::Publisher gripper1_pub = n.advertise<std_msgs::Float32>("/joint/gripper2_1/position_cmd", 10);
     ros::Publisher gripper2_pub = n.advertise<std_msgs::Float32>("/joint/gripper2_2/position_cmd", 10);
-    ros::Publisher delta1_pub = n.advertise<std_msgs::Float32>("/joint/1/position_cmd", 10);
-    ros::Publisher delta2_pub = n.advertise<std_msgs::Float32>("/joint/2/position_cmd", 10);
-    ros::Publisher delta3_pub = n.advertise<std_msgs::Float32>("/joint/3/position_cmd", 10);
+    ros::Publisher delta1_pub = n.advertise<std_msgs::Float32>("/joint/delta_1/position_cmd", 10);
+    ros::Publisher delta2_pub = n.advertise<std_msgs::Float32>("/joint/delta_2/position_cmd", 10);
+    ros::Publisher delta3_pub = n.advertise<std_msgs::Float32>("/joint/delta_3/position_cmd", 10);
 
     std_msgs::Float32 delta1_pos, delta2_pos, delta3_pos;
     std_msgs::Float32 gripper1_pos,gripper2_pos;
