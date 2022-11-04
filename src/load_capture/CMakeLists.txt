@@ -20,6 +20,9 @@ include_directories(
   ${catkin_INCLUDE_DIRS}
 )
 
+add_executable(load_capture_gripper1 load_capture_gripper1.cpp)
+target_link_libraries(load_capture_gripper1 ${catkin_LIBRARIES})
+
 add_executable(load_capture_gripper3 load_capture_gripper3.cpp)
 target_link_libraries(load_capture_gripper3 ${catkin_LIBRARIES})
 

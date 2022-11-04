@@ -101,17 +101,6 @@ edit_cache/fast: edit_cache
 
 .PHONY : edit_cache/fast
 
-# Special rule for the target test
-test:
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running tests..."
-	/usr/bin/ctest --force-new-ctest-process $(ARGS)
-.PHONY : test
-
-# Special rule for the target test
-test/fast: test
-
-.PHONY : test/fast
-
 # Special rule for the target install/local
 install/local: preinstall
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing only the local directory..."
@@ -134,6 +123,17 @@ rebuild_cache:
 rebuild_cache/fast: rebuild_cache
 
 .PHONY : rebuild_cache/fast
+
+# Special rule for the target test
+test:
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running tests..."
+	/usr/bin/ctest --force-new-ctest-process $(ARGS)
+.PHONY : test
+
+# Special rule for the target test
+test/fast: test
+
+.PHONY : test/fast
 
 # The main all target
 all: cmake_check_build_system
@@ -558,6 +558,19 @@ sensor_msgs_generate_messages_nodejs/fast:
 .PHONY : sensor_msgs_generate_messages_nodejs/fast
 
 #=============================================================================
+# Target rules for targets named load_capture_gripper1
+
+# Build rule for target.
+load_capture_gripper1: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 load_capture_gripper1
+.PHONY : load_capture_gripper1
+
+# fast build rule for target.
+load_capture_gripper1/fast:
+	$(MAKE) -f CMakeFiles/load_capture_gripper1.dir/build.make CMakeFiles/load_capture_gripper1.dir/build
+.PHONY : load_capture_gripper1/fast
+
+#=============================================================================
 # Target rules for targets named roscpp_generate_messages_py
 
 # Build rule for target.
@@ -635,6 +648,33 @@ gtest/fast:
 	$(MAKE) -f gtest/googlemock/gtest/CMakeFiles/gtest.dir/build.make gtest/googlemock/gtest/CMakeFiles/gtest.dir/build
 .PHONY : gtest/fast
 
+load_capture_gripper1.o: load_capture_gripper1.cpp.o
+
+.PHONY : load_capture_gripper1.o
+
+# target to build an object file
+load_capture_gripper1.cpp.o:
+	$(MAKE) -f CMakeFiles/load_capture_gripper1.dir/build.make CMakeFiles/load_capture_gripper1.dir/load_capture_gripper1.cpp.o
+.PHONY : load_capture_gripper1.cpp.o
+
+load_capture_gripper1.i: load_capture_gripper1.cpp.i
+
+.PHONY : load_capture_gripper1.i
+
+# target to preprocess a source file
+load_capture_gripper1.cpp.i:
+	$(MAKE) -f CMakeFiles/load_capture_gripper1.dir/build.make CMakeFiles/load_capture_gripper1.dir/load_capture_gripper1.cpp.i
+.PHONY : load_capture_gripper1.cpp.i
+
+load_capture_gripper1.s: load_capture_gripper1.cpp.s
+
+.PHONY : load_capture_gripper1.s
+
+# target to generate assembly for a file
+load_capture_gripper1.cpp.s:
+	$(MAKE) -f CMakeFiles/load_capture_gripper1.dir/build.make CMakeFiles/load_capture_gripper1.dir/load_capture_gripper1.cpp.s
+.PHONY : load_capture_gripper1.cpp.s
+
 load_capture_gripper2.o: load_capture_gripper2.cpp.o
 
 .PHONY : load_capture_gripper2.o
@@ -697,13 +737,13 @@ help:
 	@echo "... depend"
 	@echo "... install/strip"
 	@echo "... install"
+	@echo "... list_install_components"
 	@echo "... rosgraph_msgs_generate_messages_nodejs"
 	@echo "... rosgraph_msgs_generate_messages_py"
 	@echo "... std_msgs_generate_messages_eus"
 	@echo "... rosgraph_msgs_generate_messages_lisp"
 	@echo "... rosgraph_msgs_generate_messages_eus"
 	@echo "... rosgraph_msgs_generate_messages_cpp"
-	@echo "... list_install_components"
 	@echo "... std_msgs_generate_messages_py"
 	@echo "... geometry_msgs_generate_messages_eus"
 	@echo "... roscpp_generate_messages_nodejs"
@@ -724,7 +764,6 @@ help:
 	@echo "... std_msgs_generate_messages_nodejs"
 	@echo "... geometry_msgs_generate_messages_cpp"
 	@echo "... geometry_msgs_generate_messages_lisp"
-	@echo "... test"
 	@echo "... geometry_msgs_generate_messages_py"
 	@echo "... install/local"
 	@echo "... doxygen"
@@ -732,12 +771,17 @@ help:
 	@echo "... roscpp_generate_messages_cpp"
 	@echo "... rebuild_cache"
 	@echo "... sensor_msgs_generate_messages_nodejs"
+	@echo "... test"
+	@echo "... load_capture_gripper1"
 	@echo "... roscpp_generate_messages_py"
 	@echo "... load_capture_gripper2"
 	@echo "... gmock_main"
 	@echo "... gmock"
 	@echo "... gtest_main"
 	@echo "... gtest"
+	@echo "... load_capture_gripper1.o"
+	@echo "... load_capture_gripper1.i"
+	@echo "... load_capture_gripper1.s"
 	@echo "... load_capture_gripper2.o"
 	@echo "... load_capture_gripper2.i"
 	@echo "... load_capture_gripper2.s"
