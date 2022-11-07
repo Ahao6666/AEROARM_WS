@@ -28,8 +28,9 @@ int main(int argc, char **argv)
 
     while (ros::ok())
     {
-        gripper1_pos.data = 0;
-        gripper2_pos.data = 0.5;
+        //capture
+        gripper1_pos.data = -0.25;
+        gripper2_pos.data = 0.25;
         gripper1_pub.publish(gripper1_pos);
         gripper2_pub.publish(gripper2_pos);
         loop_rate.sleep();
@@ -49,9 +50,9 @@ int main(int argc, char **argv)
         delta2_pub.publish(delta2_pos);
         delta3_pub.publish(delta3_pos);
         loop_rate.sleep();
-
-        gripper1_pos.data = 0.5;
-        gripper2_pos.data = 0;
+        //place
+        gripper1_pos.data = 1;
+        gripper2_pos.data = -1;
         gripper1_pub.publish(gripper1_pos);
         gripper2_pub.publish(gripper2_pos);
         loop_rate.sleep();
