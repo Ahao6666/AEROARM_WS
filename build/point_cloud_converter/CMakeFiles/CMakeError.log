@@ -1,22 +1,22 @@
 Determining if the pthread_create exist failed with the following output:
 Change Dir: /home/ahao/catkin_ws/build/point_cloud_converter/CMakeFiles/CMakeTmp
 
-Run Build Command:"/usr/bin/make" "cmTC_1061e/fast"
-/usr/bin/make -f CMakeFiles/cmTC_1061e.dir/build.make CMakeFiles/cmTC_1061e.dir/build
+Run Build Command:"/usr/bin/make" "cmTC_8a6f8/fast"
+/usr/bin/make -f CMakeFiles/cmTC_8a6f8.dir/build.make CMakeFiles/cmTC_8a6f8.dir/build
 make[1]: Entering directory '/home/ahao/catkin_ws/build/point_cloud_converter/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_1061e.dir/CheckSymbolExists.c.o
-/usr/bin/cc    -o CMakeFiles/cmTC_1061e.dir/CheckSymbolExists.c.o   -c /home/ahao/catkin_ws/build/point_cloud_converter/CMakeFiles/CMakeTmp/CheckSymbolExists.c
-Linking C executable cmTC_1061e
-/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_1061e.dir/link.txt --verbose=1
-/usr/bin/cc      -rdynamic CMakeFiles/cmTC_1061e.dir/CheckSymbolExists.c.o  -o cmTC_1061e 
-CMakeFiles/cmTC_1061e.dir/CheckSymbolExists.c.o: In function `main':
+Building C object CMakeFiles/cmTC_8a6f8.dir/CheckSymbolExists.c.o
+/usr/bin/cc    -o CMakeFiles/cmTC_8a6f8.dir/CheckSymbolExists.c.o   -c /home/ahao/catkin_ws/build/point_cloud_converter/CMakeFiles/CMakeTmp/CheckSymbolExists.c
+Linking C executable cmTC_8a6f8
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_8a6f8.dir/link.txt --verbose=1
+/usr/bin/cc      -rdynamic CMakeFiles/cmTC_8a6f8.dir/CheckSymbolExists.c.o  -o cmTC_8a6f8 
+CMakeFiles/cmTC_8a6f8.dir/CheckSymbolExists.c.o: In function `main':
 CheckSymbolExists.c:(.text+0x1b): undefined reference to `pthread_create'
 collect2: error: ld returned 1 exit status
-CMakeFiles/cmTC_1061e.dir/build.make:97: recipe for target 'cmTC_1061e' failed
-make[1]: *** [cmTC_1061e] Error 1
+CMakeFiles/cmTC_8a6f8.dir/build.make:97: recipe for target 'cmTC_8a6f8' failed
+make[1]: *** [cmTC_8a6f8] Error 1
 make[1]: Leaving directory '/home/ahao/catkin_ws/build/point_cloud_converter/CMakeFiles/CMakeTmp'
-Makefile:126: recipe for target 'cmTC_1061e/fast' failed
-make: *** [cmTC_1061e/fast] Error 2
+Makefile:126: recipe for target 'cmTC_8a6f8/fast' failed
+make: *** [cmTC_8a6f8/fast] Error 2
 
 File /home/ahao/catkin_ws/build/point_cloud_converter/CMakeFiles/CMakeTmp/CheckSymbolExists.c:
 /* */
@@ -36,20 +36,20 @@ int main(int argc, char** argv)
 Determining if the function pthread_create exists in the pthreads failed with the following output:
 Change Dir: /home/ahao/catkin_ws/build/point_cloud_converter/CMakeFiles/CMakeTmp
 
-Run Build Command:"/usr/bin/make" "cmTC_bfc03/fast"
-/usr/bin/make -f CMakeFiles/cmTC_bfc03.dir/build.make CMakeFiles/cmTC_bfc03.dir/build
+Run Build Command:"/usr/bin/make" "cmTC_2836c/fast"
+/usr/bin/make -f CMakeFiles/cmTC_2836c.dir/build.make CMakeFiles/cmTC_2836c.dir/build
 make[1]: Entering directory '/home/ahao/catkin_ws/build/point_cloud_converter/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_bfc03.dir/CheckFunctionExists.c.o
-/usr/bin/cc   -DCHECK_FUNCTION_EXISTS=pthread_create   -o CMakeFiles/cmTC_bfc03.dir/CheckFunctionExists.c.o   -c /usr/share/cmake-3.10/Modules/CheckFunctionExists.c
-Linking C executable cmTC_bfc03
-/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_bfc03.dir/link.txt --verbose=1
-/usr/bin/cc  -DCHECK_FUNCTION_EXISTS=pthread_create    -rdynamic CMakeFiles/cmTC_bfc03.dir/CheckFunctionExists.c.o  -o cmTC_bfc03 -lpthreads 
+Building C object CMakeFiles/cmTC_2836c.dir/CheckFunctionExists.c.o
+/usr/bin/cc   -DCHECK_FUNCTION_EXISTS=pthread_create   -o CMakeFiles/cmTC_2836c.dir/CheckFunctionExists.c.o   -c /usr/share/cmake-3.10/Modules/CheckFunctionExists.c
+Linking C executable cmTC_2836c
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_2836c.dir/link.txt --verbose=1
+/usr/bin/cc  -DCHECK_FUNCTION_EXISTS=pthread_create    -rdynamic CMakeFiles/cmTC_2836c.dir/CheckFunctionExists.c.o  -o cmTC_2836c -lpthreads 
 /usr/bin/ld: cannot find -lpthreads
 collect2: error: ld returned 1 exit status
-CMakeFiles/cmTC_bfc03.dir/build.make:97: recipe for target 'cmTC_bfc03' failed
-make[1]: *** [cmTC_bfc03] Error 1
+CMakeFiles/cmTC_2836c.dir/build.make:97: recipe for target 'cmTC_2836c' failed
+make[1]: *** [cmTC_2836c] Error 1
 make[1]: Leaving directory '/home/ahao/catkin_ws/build/point_cloud_converter/CMakeFiles/CMakeTmp'
-Makefile:126: recipe for target 'cmTC_bfc03/fast' failed
-make: *** [cmTC_bfc03/fast] Error 2
+Makefile:126: recipe for target 'cmTC_2836c/fast' failed
+make: *** [cmTC_2836c/fast] Error 2
 
 

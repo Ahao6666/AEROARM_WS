@@ -8,8 +8,6 @@
 
 # modified environment variables
 export CMAKE_PREFIX_PATH="/home/ahao/catkin_ws/devel/.private/load_capture:$CMAKE_PREFIX_PATH"
-export LD_LIBRARY_PATH="/home/ahao/catkin_ws/devel/.private/load_capture/lib:$LD_LIBRARY_PATH"
-export PKG_CONFIG_PATH="/home/ahao/catkin_ws/devel/.private/load_capture/lib/pkgconfig:$PKG_CONFIG_PATH"
 export PWD='/home/ahao/catkin_ws/build/load_capture'
 export ROSLISP_PACKAGE_DIRECTORIES="/home/ahao/catkin_ws/devel/.private/load_capture/share/common-lisp:$ROSLISP_PACKAGE_DIRECTORIES"
 export ROS_PACKAGE_PATH="/home/ahao/catkin_ws/src/load_capture:$ROS_PACKAGE_PATH"
