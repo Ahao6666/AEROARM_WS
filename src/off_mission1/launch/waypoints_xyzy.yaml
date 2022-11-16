@@ -1,0 +1,8 @@
+# param: value
+waypoints:
+# ENU frame: x, y z, yaw
+# numbers must in x.x format(i.e: 5.0)
+# the last waypoint (land point) is suggested to be 3 m above ground, LAND is triggered after the last waypoint is reached
+# at least two waypoints must be specified
+- [ 0.0,        0.0,     1.2,   0.0]
+- [ 0.0,        0.0,     1.2,   0.0]

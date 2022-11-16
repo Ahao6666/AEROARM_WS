@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+
+<launch>
+   <node pkg="navigator" type="navigator" name="navigator" output="screen">
+
+        <!--<rosparam command="load" file="$(find off_mission)/launch/waypoints_xyzy.yaml"/>-->
+
+        <!--<param name="takeoff_height" value="5.0"/>-->
+   </node>
+</launch>
