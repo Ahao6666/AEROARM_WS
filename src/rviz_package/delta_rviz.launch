@@ -1,6 +1,6 @@
 <?xml version="1.1" ?>
 <launch>
-	<arg name="model" default="/home/kantsky/beifen/xzt/sim_aema/ros_sim/src/rviz_package/result_model1.urdf"/>
+	<arg name="model" default="result_model1.urdf"/>
         <param name="use_sim_time" value="true"/>
 
  	<arg name="database_path"     default="rtabmap.db"/>
@@ -27,7 +27,7 @@
 <!--  <node name="odom_publisher" pkg="odom_publisher" type="odom_publisher" />-->
 <!--  <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" />-->
   	<node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" />
-  	<node name="rviz" pkg="rviz" type="rviz" args="-d /home/kantsky/beifen/xzt/sim_aema/ros_sim/src/rviz_package/1029.rviz" required="true" />
+  	<node name="rviz" pkg="rviz" type="rviz" args="-d ~/catkin_ws/src/rviz_package/1029.rviz" required="true" />
 
   	<node pkg="tf" type="static_transform_publisher" name="camera_link_broadcaster" args="0.1 0 0.035 -1.5707963 0 -1.5707963 base_link camera_link 50 " />
 <!--  	<node pkg="tf" type="static_transform_publisher" name="camera_link_broadcaster" args="0 0 0.1  0 0 -0 base_link velodyne 50 " />-->
