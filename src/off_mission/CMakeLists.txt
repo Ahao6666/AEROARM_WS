@@ -145,7 +145,7 @@ include_directories(
 add_executable(${PROJECT_NAME}_node src/off_mission_node.cpp 
                                     src/main.cpp
 )
-add_executable(single_circle src/single_circle.cpp)
+add_executable(single_agent_circle_mission src/single_agent_circle_mission.cpp)
 add_executable(multi_agent_circle_mission src/multi_agent_circle_mission.cpp)
 
 ## Rename C++ executable without prefix
@@ -162,7 +162,7 @@ add_dependencies(${PROJECT_NAME}_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catk
 target_link_libraries(${PROJECT_NAME}_node
 ${catkin_LIBRARIES}
 )
-target_link_libraries(single_circle
+target_link_libraries(single_agent_circle_mission
 ${catkin_LIBRARIES}
 )
 target_link_libraries(multi_agent_circle_mission

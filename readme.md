@@ -36,10 +36,15 @@ there need to `arm the rotor` and `switch the mode to offboard`
 ## publish setpoint position (50 Hz)
 - `rostopic pub -r 50 /mavros/setpoint_position/local geometry_msgs/PoseStamped "header: XXX`
 or
-- `rosrun off_mission single_circle`
+- `rosrun off_mission single_agent_circle_mission`
 
 # multi-agent simualtion
 ## start simulator
 - `roslaunch px4 multi_uav_aeroarm.launch`
 
+## open QGC
+- `cd Download`
+- `./QGroundControl.AppImage `
 
+## start multi_agent_circle mission
+- `rosrun off_mission multi_agent_circle_mission`
