@@ -1,1 +1,0 @@
-/home/ahao/catkin_ws/devel/.private/navigator/share/gennodejs/ros/navigator/msg/response.js

@@ -1,1 +1,0 @@
-/home/ahao/catkin_ws/devel/.private/off_mission/lib/pkgconfig/off_mission.pc

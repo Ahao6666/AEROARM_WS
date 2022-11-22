@@ -1,1 +1,0 @@
-/home/ahao/catkin_ws/devel/.private/load_capture/lib/pkgconfig/load_capture.pc

@@ -1,8 +1,0 @@
-prefix=/home/ahao/catkin_ws/install
-
-Name: kinematics_computing
-Description: Description of kinematics_computing
-Version: 0.0.0
-Cflags: 
-Libs: -L${prefix}/lib 
-Requires: 

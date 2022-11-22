@@ -1,1 +1,0 @@
-/home/ahao/catkin_ws/devel/.private/sim2real/lib/pkgconfig/sim2real.pc

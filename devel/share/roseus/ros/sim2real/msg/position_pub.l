@@ -1,1 +1,0 @@
-/home/ahao/catkin_ws/devel/.private/sim2real/share/roseus/ros/sim2real/msg/position_pub.l

@@ -1,1 +1,0 @@
-/home/ahao/catkin_ws/devel/.private/sim2real/share/common-lisp/ros/sim2real/srv/sim2real-srv.asd

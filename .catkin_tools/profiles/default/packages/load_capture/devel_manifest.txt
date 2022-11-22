@@ -1,8 +1,0 @@
-load_capture
-/home/ahao/catkin_ws/devel/.private/load_capture/cmake.lock /home/ahao/catkin_ws/devel/./cmake.lock
-/home/ahao/catkin_ws/devel/.private/load_capture/lib/load_capture/load_capture_gripper1 /home/ahao/catkin_ws/devel/lib/load_capture/load_capture_gripper1
-/home/ahao/catkin_ws/devel/.private/load_capture/lib/load_capture/load_capture_gripper3 /home/ahao/catkin_ws/devel/lib/load_capture/load_capture_gripper3
-/home/ahao/catkin_ws/devel/.private/load_capture/lib/load_capture/load_capture_gripper2 /home/ahao/catkin_ws/devel/lib/load_capture/load_capture_gripper2
-/home/ahao/catkin_ws/devel/.private/load_capture/lib/pkgconfig/load_capture.pc /home/ahao/catkin_ws/devel/lib/pkgconfig/load_capture.pc
-/home/ahao/catkin_ws/devel/.private/load_capture/share/load_capture/cmake/load_captureConfig.cmake /home/ahao/catkin_ws/devel/share/load_capture/cmake/load_captureConfig.cmake
-/home/ahao/catkin_ws/devel/.private/load_capture/share/load_capture/cmake/load_captureConfig-version.cmake /home/ahao/catkin_ws/devel/share/load_capture/cmake/load_captureConfig-version.cmake

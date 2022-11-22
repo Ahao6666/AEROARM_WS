@@ -1,8 +1,0 @@
-prefix=/home/ahao/catkin_ws/install
-
-Name: testPub
-Description: Description of testPub
-Version: 0.0.0
-Cflags: 
-Libs: -L${prefix}/lib 
-Requires: 

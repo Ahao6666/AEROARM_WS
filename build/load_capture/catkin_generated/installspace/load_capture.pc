@@ -1,8 +1,0 @@
-prefix=/home/ahao/catkin_ws/install
-
-Name: load_capture
-Description: Description of load_capture
-Version: 0.0.0
-Cflags: 
-Libs: -L${prefix}/lib 
-Requires: 

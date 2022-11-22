@@ -1,1 +1,0 @@
-/home/ahao/catkin_ws/devel/.private/kinematics_computing/lib/pkgconfig/kinematics_computing.pc

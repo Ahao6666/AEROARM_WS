@@ -1,1 +1,0 @@
-/home/ahao/catkin_ws/devel/.private/clik/include/clik/manipulator_mode.h

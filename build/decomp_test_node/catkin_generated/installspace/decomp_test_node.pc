@@ -1,8 +1,0 @@
-prefix=/home/ahao/catkin_ws/install
-
-Name: decomp_test_node
-Description: Description of decomp_test_node
-Version: 0.0.1
-Cflags: 
-Libs: -L${prefix}/lib 
-Requires: roscpp rosbag decomp_ros_utils

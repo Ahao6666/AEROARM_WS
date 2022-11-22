@@ -1,1 +1,0 @@
-/home/ahao/catkin_ws/devel/.private/sim2real/share/gennodejs/ros/sim2real/srv/cmd_mode.js

@@ -1,1 +1,0 @@
-/home/ahao/catkin_ws/devel/.private/navigator/lib/python2.7/dist-packages/navigator/__init__.py

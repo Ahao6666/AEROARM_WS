@@ -1,8 +1,0 @@
-prefix=/home/ahao/catkin_ws/devel/.private/off_mission
-
-Name: off_mission
-Description: Description of off_mission
-Version: 0.0.0
-Cflags: -I/opt/ros/melodic/include
-Libs: -L${prefix}/lib -loff_mission
-Requires: mavros mavros_msgs roscpp rospy geometry_msgs navigator

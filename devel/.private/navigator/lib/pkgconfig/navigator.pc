@@ -1,8 +1,0 @@
-prefix=/home/ahao/catkin_ws/devel/.private/navigator
-
-Name: navigator
-Description: Description of navigator
-Version: 0.0.0
-Cflags: -I/home/ahao/catkin_ws/devel/.private/navigator/include -I/home/ahao/catkin_ws/src/navigator/include
-Libs: -L${prefix}/lib 
-Requires: mavros mavros_msgs roscpp message_runtime std_msgs

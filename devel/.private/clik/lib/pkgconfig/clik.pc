@@ -1,8 +1,0 @@
-prefix=/home/ahao/catkin_ws/devel/.private/clik
-
-Name: clik
-Description: Description of clik
-Version: 0.0.0
-Cflags: -I/home/ahao/catkin_ws/devel/.private/clik/include
-Libs: -L${prefix}/lib 
-Requires: message_runtime std_msgs

@@ -1,1 +1,0 @@
-/home/ahao/catkin_ws/devel/.private/task_plan/share/common-lisp/ros/task_plan/srv/traj_solver_msg.lisp

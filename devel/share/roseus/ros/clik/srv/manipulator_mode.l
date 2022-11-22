@@ -1,1 +1,0 @@
-/home/ahao/catkin_ws/devel/.private/clik/share/roseus/ros/clik/srv/manipulator_mode.l

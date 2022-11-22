@@ -1,6 +1,0 @@
-gripper_control
-/home/ahao/catkin_ws/devel/.private/gripper_control/cmake.lock /home/ahao/catkin_ws/devel/./cmake.lock
-/home/ahao/catkin_ws/devel/.private/gripper_control/lib/pkgconfig/gripper_control.pc /home/ahao/catkin_ws/devel/lib/pkgconfig/gripper_control.pc
-/home/ahao/catkin_ws/devel/.private/gripper_control/lib/gripper_control/gripper_control /home/ahao/catkin_ws/devel/lib/gripper_control/gripper_control
-/home/ahao/catkin_ws/devel/.private/gripper_control/share/gripper_control/cmake/gripper_controlConfig.cmake /home/ahao/catkin_ws/devel/share/gripper_control/cmake/gripper_controlConfig.cmake
-/home/ahao/catkin_ws/devel/.private/gripper_control/share/gripper_control/cmake/gripper_controlConfig-version.cmake /home/ahao/catkin_ws/devel/share/gripper_control/cmake/gripper_controlConfig-version.cmake

@@ -1,1 +1,0 @@
-/home/ahao/catkin_ws/devel/.private/navigator/share/roseus/ros/navigator/msg/action.l
