@@ -146,6 +146,7 @@ add_executable(${PROJECT_NAME}_node src/off_mission_node.cpp
                                     src/main.cpp
 )
 add_executable(single_circle src/single_circle.cpp)
+add_executable(multi_agent_circle_mission src/multi_agent_circle_mission.cpp)
 
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
@@ -162,6 +163,9 @@ target_link_libraries(${PROJECT_NAME}_node
 ${catkin_LIBRARIES}
 )
 target_link_libraries(single_circle
+${catkin_LIBRARIES}
+)
+target_link_libraries(multi_agent_circle_mission
 ${catkin_LIBRARIES}
 )
 

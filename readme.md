@@ -22,23 +22,24 @@
 # single simulation
 
 ## start simulator
-$ `roslaunch px4 posix_sitl.launch`
+- `roslaunch px4 posix_sitl.launch`
 
 ## get connection
-$ `cd catkin_ws`
-$ `roslaunch robot_connection.launch`
+- `cd catkin_ws`
+- `roslaunch robot_connection.launch`
 
 ## open QGC
-$ `cd Download`
-$ `./QGroundControl.AppImage `
+- `cd Download`
+- `./QGroundControl.AppImage `
 there need to `arm the rotor` and `switch the mode to offboard`
 
 ## publish setpoint position (50 Hz)
-$ `rostopic pub -r 50 /mavros/setpoint_position/local geometry_msgs/PoseStamped "header: XXX`
+- `rostopic pub -r 50 /mavros/setpoint_position/local geometry_msgs/PoseStamped "header: XXX`
 or
-$ `rosrun off_mission single_circle`
+- `rosrun off_mission single_circle`
+
 # multi-agent simualtion
 ## start simulator
-$ `roslaunch px4 multi_uav_aeroarm.launch`
+- `roslaunch px4 multi_uav_aeroarm.launch`
 
 
