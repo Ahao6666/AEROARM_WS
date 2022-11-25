@@ -19,7 +19,7 @@
 - `roslaunch delta_rviz.launch`
 
 
-# single simulation
+# single-agent simulation
 
 ## start simulator
 - `roslaunch px4 posix_sitl.launch`
