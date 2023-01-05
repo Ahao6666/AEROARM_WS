@@ -1,0 +1,39 @@
+{
+  "configurations": [
+    {
+      "browse": {
+        "databaseFilename": "${default}",
+        "limitSymbolsToIncludedHeaders": false
+      },
+      "includePath": [
+        "/home/ahao/PV_ws/devel/include/**",
+        "/home/ahao/mavros_ws/devel/include/**",
+        "/home/ahao/delta_mani/devel/include/**",
+        "/home/ahao/tandem_mani/devel/include/**",
+        "/home/ahao/catkin_ws/devel/include/**",
+        "/opt/ros/melodic/include/**",
+        "/home/ahao/catkin_ws/src/calibration/include/**",
+        "/home/ahao/catkin_ws/src/clik/include/**",
+        "/home/ahao/catkin_ws/src/DecompROS/decomp_ros_utils/include/**",
+        "/home/ahao/catkin_ws/src/DecompROS/DecompUtil/include/**",
+        "/home/ahao/mavros_ws/src/mavros/libmavconn/include/**",
+        "/home/ahao/mavros_ws/src/mavros/mavros/include/**",
+        "/home/ahao/mavros_ws/src/mavros/mavros_msgs/include/**",
+        "/home/ahao/catkin_ws/src/navigator/include/**",
+        "/home/ahao/PV_ws/src/setpoint/include/**",
+        "/home/ahao/catkin_ws/src/sim2real/include/**",
+        "/home/ahao/catkin_ws/src/task_plan/include/**",
+        "/home/ahao/mavros_ws/src/mavros/test_mavros/include/**",
+        "/home/ahao/catkin_ws/src/velodyne_simulator/velodyne_gazebo_plugins/include/**",
+        "/home/ahao/tandem_mani/src/vicon_mav/include/**",
+        "/usr/include/**"
+      ],
+      "name": "ROS",
+      "intelliSenseMode": "gcc-x64",
+      "compilerPath": "/usr/bin/gcc",
+      "cStandard": "gnu11",
+      "cppStandard": "c++14"
+    }
+  ],
+  "version": 4
+}

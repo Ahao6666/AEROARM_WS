@@ -28,6 +28,10 @@
 - `cd catkin_ws`
 - `roslaunch robot_connection.launch`
 
+## start task_plan
+- `~/catkin_ws/src/task_plan/launch`
+- `roslaunch task_plan.launch`
+
 ## open QGC
 - `cd Download`
 - `./QGroundControl.AppImage `
@@ -37,6 +41,16 @@ there need to `arm the rotor` and `switch the mode to offboard`
 - `rostopic pub -r 50 /mavros/setpoint_position/local geometry_msgs/PoseStamped "header: XXX`
 or
 - `rosrun off_mission single_agent_circle_mission`
+
+第一步：启动GAZEBO仿真后，在地面站手动电机解锁
+
+第二步：SC拨杆分别为manual/position/offboard模式，切换至offboard模式
+
+第三步：SE拨杆至2档位，进入Online模式
+
+第四步：在offboard+Online模式下，SB拨杆用于执行飞行任务，同时自主控制Detla机械臂
+
+第五步：SA开关用于独立控制Delta机械臂
 
 # multi-agent simualtion
 ## start simulator

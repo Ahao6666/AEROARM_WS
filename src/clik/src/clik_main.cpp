@@ -375,14 +375,12 @@ void clikRos::putDowndMnipulator()
         first_off_manipulator = true;
         last_off_manipulator =  ros::Time::now();
         manipulator_mode = mod_shrink;
-        ROS_INFO("CLIK:2222222;");
     }
     if (first_off_manipulator && (ros::Time::now() - last_off_manipulator > ros::Duration(1.0)))
     {
        
         first_off_manipulator = false;
         Delta_mode.request.mode = 0;
-        ROS_INFO("CLIK:1111;");
 
         // 发送模式指令
         if (manipulator_client.call(Delta_mode)&&Delta_mode.response.result)

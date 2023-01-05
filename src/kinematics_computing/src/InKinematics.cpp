@@ -63,9 +63,9 @@ Inverse_Kinematics_Talker::Inverse_Kinematics_Talker(int argc, char** argv){
 		ROS_ERROR("Something is wrong with ROS. Will keep trying...");
 
 	// to gazebo
-  	joint_gazebo_pub1 = nh_.advertise<std_msgs::Float32>("/joint/1/position_cmd", 1000);
-  	joint_gazebo_pub2 = nh_.advertise<std_msgs::Float32>("/joint/2/position_cmd", 1000);
-  	joint_gazebo_pub3 = nh_.advertise<std_msgs::Float32>("/joint/3/position_cmd", 1000);
+  	joint_gazebo_pub1 = nh_.advertise<std_msgs::Float32>("/joint/delta_1/position_cmd", 1000);
+  	joint_gazebo_pub2 = nh_.advertise<std_msgs::Float32>("/joint/delta_2/position_cmd", 1000);
+  	joint_gazebo_pub3 = nh_.advertise<std_msgs::Float32>("/joint/delta_3/position_cmd", 1000);
 
 
 	// to rviz
