@@ -313,12 +313,12 @@ void clikRos::object_callback(const geometry_msgs::TransformStamped& message_hol
 
 bool clikRos::isManupulator(const mavros_msgs::RCIn& rcin)
 {
-    return ((rcin.channels.size()>=7) && (rcin.channels.at(9)>1500));//机械臂收放 通道10
+    return ((rcin.channels.size()>=7) && (rcin.channels.at(9)>1500));//机械臂收放 通道10-SA
 }
 
 bool clikRos::isCoordinate(const mavros_msgs::RCIn& rcin)
 {
-    return (rcin.channels.size()>=7 && rcin.channels.at(8)>1500);//进入协同模式 通道待定
+    return (rcin.channels.size()>=7 && rcin.channels.at(8)>1500);//进入协同模式 通道9-SB
 }
 
 void clikRos::setOnGroundOrigin()

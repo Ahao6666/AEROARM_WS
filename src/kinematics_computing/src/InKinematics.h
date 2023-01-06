@@ -29,7 +29,7 @@ class Inverse_Kinematics_Talker{
 		// inverse kinematics results
 		double theta1_, theta2_, theta3_;
 		double theta1_save_, theta2_save_, theta3_save_;
-
+		bool gripper_switch_;
 		// for inverse kinematics computing
 		double x_, y_, z_;
 
@@ -46,7 +46,8 @@ class Inverse_Kinematics_Talker{
 
 		// sub trajGenerator cb
 		void endEffe_sub_cb(const geometry_msgs::Point& msg);
-
+		// return gripper state
+		bool getGripperState(){return gripper_switch_;};
 		// inverse kinematics initialization
 		void setPos();
 
@@ -60,6 +61,8 @@ class Inverse_Kinematics_Talker{
 		ros::Publisher joint_gazebo_pub1;
 		ros::Publisher joint_gazebo_pub2;
 		ros::Publisher joint_gazebo_pub3;
+		ros::Publisher joint_gripper_gazebo_pub1;
+		ros::Publisher joint_gripper_gazebo_pub2;
 
 		// pub to rviz node
 		ros::Publisher state_pub;

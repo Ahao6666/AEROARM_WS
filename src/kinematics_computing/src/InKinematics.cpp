@@ -49,6 +49,10 @@ void Inverse_Kinematics_Talker::calculation(double X, double Y, double Z)
 		f1 = 1;
 	else
 		f1 = 0; // non - existing
+	if (Z < -0.3)
+		gripper_switch_ = true;
+	else
+		gripper_switch_ = false;
 }
 
 void Inverse_Kinematics_Talker::inverse_kinematics(){
@@ -66,7 +70,8 @@ Inverse_Kinematics_Talker::Inverse_Kinematics_Talker(int argc, char** argv){
   	joint_gazebo_pub1 = nh_.advertise<std_msgs::Float32>("/joint/delta_1/position_cmd", 1000);
   	joint_gazebo_pub2 = nh_.advertise<std_msgs::Float32>("/joint/delta_2/position_cmd", 1000);
   	joint_gazebo_pub3 = nh_.advertise<std_msgs::Float32>("/joint/delta_3/position_cmd", 1000);
-
+  	joint_gripper_gazebo_pub1 = nh_.advertise<std_msgs::Float32>("/joint/gripper1_1/position_cmd", 1000);
+  	joint_gripper_gazebo_pub2 = nh_.advertise<std_msgs::Float32>("/joint/gripper1_2/position_cmd", 1000);
 
 	// to rviz
   	state_pub = nh_.advertise<sensor_msgs::JointState>("joint_states", 1000);

@@ -114,24 +114,24 @@ private:
 
     bool isSwitchLand(const mavros_msgs::RCIn& rcin)
     {
-        return (rcin.channels.size()>=7 && rcin.channels.at(6)<1300);
+        return (rcin.channels.size()>=7 && rcin.channels.at(6)<1300);   //Land mode 通道7-SE
     }
 
     bool isSwitchTakeoffHover(const mavros_msgs::RCIn& rcin)
     {
-        return (rcin.channels.size()>=7 && rcin.channels.at(6)>1300 && rcin.channels.at(6)<1700);
+        return (rcin.channels.size()>=7 && rcin.channels.at(6)>1300 && rcin.channels.at(6)<1700); //Takeoff and Hover mode 通道7-SE
     }
 
     bool isSwitchPath(const mavros_msgs::RCIn& rcin)
     {
-        return (rcin.channels.size()>=7 && rcin.channels.at(6)>1800 && rcin.channels.at(6)<2100);
+        return (rcin.channels.size()>=7 && rcin.channels.at(6)>1800 && rcin.channels.at(6)<2100); //Path mode 通道7-SE
     }
 
     bool isAutoOffboardMode(const mavros_msgs::RCIn& rcin)
     {
         return (rcin.channels.size()>=7 &&
-                rcin.channels.at(4)>1800 && rcin.channels.at(4)<2100 &&
-                rcin.channels.at(5)>1800 && rcin.channels.at(5)<2100);
+                rcin.channels.at(4)>1800 && rcin.channels.at(4)<2100 &&  //通道5-SC
+                rcin.channels.at(5)>1800 && rcin.channels.at(5)<2100);  //通道6-SD
     }
 
     bool isAutoMode(const mavros_msgs::RCIn& rcin)
@@ -143,7 +143,7 @@ private:
     bool isOffboardSwitchOn(const mavros_msgs::RCIn& rcin)
     {
     return (rcin.channels.size()>=7 &&
-            rcin.channels.at(4)>900 && rcin.channels.at(4)<1200);
+            rcin.channels.at(4)>900 && rcin.channels.at(4)<1200);//Offboard mdoe, 通道5-SC
     }
     
     
