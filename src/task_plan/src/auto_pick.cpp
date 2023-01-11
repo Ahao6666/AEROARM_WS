@@ -77,6 +77,7 @@ bool auto_pick::traj_out_call(task_plan::traj_out_msgRequest& request,task_plan:
         flying_plan_.time_align();
         time_align_for_end();// 这个时候计算早结束了，只是用于修改调用时间
         ROS_INFO("Trajectory of the quadcopter is sending!");
+        // TODO:
     }
     
     path_point traj_sp;

@@ -49,10 +49,6 @@ void Inverse_Kinematics_Talker::calculation(double X, double Y, double Z)
 		f1 = 1;
 	else
 		f1 = 0; // non - existing
-	if (Z < -0.3)
-		gripper_switch_ = true;
-	else
-		gripper_switch_ = false;
 }
 
 void Inverse_Kinematics_Talker::inverse_kinematics(){
@@ -78,6 +74,7 @@ Inverse_Kinematics_Talker::Inverse_Kinematics_Talker(int argc, char** argv){
 
 
   	endEffe_sub = nh_.subscribe("/traj/rel_posi", 1, &Inverse_Kinematics_Talker::endEffe_sub_cb, this);
+  	gripper_sub = nh_.subscribe("/gripper_cmd", 1, &Inverse_Kinematics_Talker::gripper_sub_cb, this);
 
 
   	theta1_=0;
@@ -124,6 +121,12 @@ void Inverse_Kinematics_Talker::endEffe_sub_cb(const geometry_msgs::Point& msg){
 	desiredPos.setValue(msg.x,msg.y,msg.z);
 
 }
+void Inverse_Kinematics_Talker::gripper_sub_cb(const sim2real::gripper_cmd& msg){
+	gripper1_.data = msg.gripper_left;
+	joint_gripper_gazebo_pub1.publish(gripper1_);
+	gripper2_.data = msg.gripper_right;
+	joint_gripper_gazebo_pub2.publish(gripper2_);
 
+}
 
 

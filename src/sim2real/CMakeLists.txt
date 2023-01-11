@@ -45,6 +45,7 @@ find_package(catkin REQUIRED COMPONENTS message_generation roscpp geometry_msgs 
 ## Generate messages in the 'msg' folder
 add_message_files(FILES
   position_pub.msg
+  gripper_cmd.msg
 )
 
 

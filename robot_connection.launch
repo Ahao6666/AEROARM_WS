@@ -26,7 +26,7 @@
 
   <node pkg="kinematics_computing" name="kinematics_talker" type="Joint_Talker"  output="screen">
   </node>
-  <node pkg="sim2real" name="sim2real" type="sim_to_real" >
+  <node pkg="sim2real" name="sim2real" type="sim_to_real" output="screen">
   </node>
 
   <node pkg="joy" name="joy" type="joy_node">

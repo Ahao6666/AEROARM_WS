@@ -1,0 +1,2 @@
+float64 gripper_left
+float64 gripper_right

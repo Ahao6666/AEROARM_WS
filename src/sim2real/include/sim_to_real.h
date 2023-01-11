@@ -12,6 +12,8 @@
 #include "std_msgs/String.h"
 #include "sim2real/position_pub.h"
 #include "sim2real/cmd_mode.h"
+//girpper command
+#include "sim2real/gripper_cmd.h"
 
 
 
@@ -31,10 +33,14 @@ private:
     ros::Publisher RC_pub_;        // 【发布】遥控器指令
     geometry_msgs::TransformStamped endEffectorPosition_; 
     ros::Publisher endEffe_traj_pub_;        // 【发布】机械臂的末端位置指令
+    ros::Publisher gripper_cmd_pub_;        // 【发布】机械臂的末端位置指令
+
     geometry_msgs::Point traj_endEffe_;
+    sim2real::gripper_cmd gripper_cmd_;
 
   //接收控上位机控制指令
   ros::ServiceServer cmd_mod_sub_;
+  ros::ServiceServer cmd_gripper_mod_sub_;
 
   //接收位置指令
   ros::Subscriber cmd_pos_sub_; 
@@ -43,6 +49,7 @@ private:
     int Cmd_mode_=0;
     ros::Time Mod_time_;
     bool cmd_mode_Callback(sim2real::cmd_mode::Request  &req, sim2real::cmd_mode::Response &res);
+    bool cmd_gripper_mode_Callback(sim2real::cmd_mode::Request  &req, sim2real::cmd_mode::Response &res);
 
     void  endEffector_obtain(const nav_msgs::Odometry::ConstPtr &msg);
     void cmd_pos_Callback(const sim2real::position_pub::ConstPtr& msg1);

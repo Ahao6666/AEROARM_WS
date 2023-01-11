@@ -18,6 +18,7 @@
 #include <math.h>
 #include <clik/position_pub.h>
 #include <clik/manipulator_mode.h>
+#include <clik/gripper_mode.h>
 #include "clik/traj_out_msg.h"
 #include "clik/traj_solver_msg.h"
 #include <string.h>
@@ -87,6 +88,7 @@ public:
  
     mavros_msgs::State current_state;
     COM_MODE manipulator_mode;
+    COM_MODE gripper_mode;
 
 private:
 
@@ -112,6 +114,7 @@ private:
 
     ros::ServiceClient manipulator_client; // 客户端修改模式
     ros::ServiceClient set_mode_client; // 客户端 修改飞机的模式
+    ros::ServiceClient gripper_client; // 客户端修改gripper模式
 
     bool reset_CLIK_flag_;
     bool on_off_manipulator_flag_; // 机械臂收放状态：false放，true收
@@ -121,10 +124,13 @@ private:
     bool stall_manipulater_flag_;// 保持机械臂的模式指令
     bool first_off_manipulator;// 首次进入放机械臂状态
     bool first_on_manipulator;// 首次收sho进入机械臂状态
+    bool first_on_gripper;// 首次收sho进入gripper
     bool coordinate_running_flag_;// 协调控制已经进入
+    bool gripper_switch_;     //机械爪收放判断
 
     ros::Time last_off_manipulator; // 首次进入放机械臂状态时间
     ros::Time last_on_manipulator; // 首次进入放机械臂状态时间
+    ros::Time last_on_gripper; 
     ros::Time last_coordinate; // 首次进入协同模式时间
     ros::Time last_time; // 上一步计算时间
     ros::Time now_time; // 这一步计算时间
@@ -149,6 +155,7 @@ private:
     geometry_msgs::PoseStamped current_local_pos; //当前位置信息
     clik::position_pub Delts_cont; // 发布delta机械臂的位置指令 
     clik::manipulator_mode Delta_mode; //发布机械臂模式
+    clik::gripper_mode Gripper_mode; //发布gripper模式
     mavros_msgs::SetMode offb_set_mode; // 飞机的飞行模式，这里要把飞机的模式修改位off-board模式
     geometry_msgs::PoseStamped pose; // 储存飞机的位置和偏航指令
     Eigen::Vector3d attitude_sp; // 储存期望的姿态
@@ -167,6 +174,7 @@ private:
    
 
     bool isManupulator(const mavros_msgs::RCIn& rcin);
+    bool isGripper(const mavros_msgs::RCIn& rcin);
     bool isCoordinate(const mavros_msgs::RCIn& rcin);
     void coordinateManipulator2Body(const  Eigen::Vector3d& p_mani, Eigen::Vector3d& p_body);
     void  coordinateBody2Manipulator(const Eigen::Vector3d& p_body , Eigen::Vector3d& p_mani );
@@ -190,6 +198,8 @@ private:
     void putDowndMnipulator();
     // 收上机械臂
     void putUpMnipulator();
+    // 机械爪控制
+    void Gripper_control();
     // 协调控制
     void handleCoordinate();
     // 无人机安全飞行限制

@@ -53,6 +53,7 @@ add_message_files(FILES
 ## Generate services in the 'srv' folder
 add_service_files(FILES
   manipulator_mode.srv
+  gripper_mode.srv
   traj_out_msg.srv
   traj_solver_msg.srv
 )
