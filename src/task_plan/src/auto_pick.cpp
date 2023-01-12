@@ -5,6 +5,16 @@ auto_pick::auto_pick(/* args */)
     // 【服务】调取指定时间的期望轨迹，如果超过轨迹的时间域，则为终点值。
     traj_result_server = nh_.advertiseService("trajectory_result", &auto_pick::traj_out_call,this);
     end_result_server = nh_.advertiseService("end_effector_result", &auto_pick::end_out_call,this);
+    // get load package state client
+    ros::ServiceClient get_model_state_client_ = nh_.serviceClient<gazebo_msgs::GetModelState>(
+		"/gazebo/get_model_state");
+	// geometry_msgs::Point payload_pos_;    // {float64 x, float64 y, float z}
+    //get the 'payload box' model state from gazebo
+    get_model_state_srv_msg_.request.model_name = "payload box";
+    get_model_state_srv_msg_.request.relative_entity_name = "link";
+    // "link" is the entity name when I add a pv_car in gazebo
+    get_model_state_client_.call(get_model_state_srv_msg_);
+    // std::cout<<"payload box z:"<<get_model_state_srv_msg_.response.pose.position.z<<std::endl;
     double yaw_offset;
     nh_.param<double>("/clik/yaw_offset_",yaw_offset_,-1.571589f);
     nh_.param<double>("/clik/x_offset",delta_offset_(0),0.010374f);
@@ -152,10 +162,22 @@ void auto_pick::get_object_vector(XmlRpc::XmlRpcValue &position,XmlRpc::XmlRpcVa
         for (size_t i = 0; i < position.size(); i++)
         {
             XmlRpc::XmlRpcValue data_list1(position[i]);
-            temp_pos.pos = Eigen::Vector3d(data_list1[0],data_list1[1],data_list1[2]);
+            // 没有使用object.yaml中的object数据,而是直接从Gazebo中获取目标位置，并完成坐标转换
+            // temp_pos.pos = Eigen::Vector3d(data_list1[0],data_list1[1],data_list1[2]);
+            temp_pos.pos = Eigen::Vector3d(get_model_state_srv_msg_.response.pose.position.x,
+                                            (-1) * get_model_state_srv_msg_.response.pose.position.y,
+                                            0.69 - get_model_state_srv_msg_.response.pose.position.z);
             temp_pos.constrant_angle = double(angle[i]);
             XmlRpc::XmlRpcValue data_list3(attitude[i]);
-            Eigen::Vector3d temp_vec = Eigen::Vector3d(data_list3[0],data_list3[1],data_list3[2]);
+            Eigen::Quaterniond quaternion;     // {w,x,y,z}
+            quaternion.x() = get_model_state_srv_msg_.response.pose.orientation.x;
+            quaternion.y() = get_model_state_srv_msg_.response.pose.orientation.y;
+            quaternion.z() = get_model_state_srv_msg_.response.pose.orientation.z;
+            quaternion.w() = get_model_state_srv_msg_.response.pose.orientation.w;
+            Eigen::Vector3d temp_vec = quaternion.matrix().eulerAngles(2,1,0); 
+            std::swap(temp_vec[0],temp_vec[2]); //switch the temp_vec[0] and temp_vec[2], so temp_vec[roll, pitch, yaw]
+            ROS_INFO("roll=%f,pitch=%f,yaw=%f",temp_vec[0],temp_vec[1],temp_vec[2]);
+            // Eigen::Vector3d temp_vec = Eigen::Vector3d(data_list3[0],data_list3[1],data_list3[2]);
             temp_pos.get_euler(temp_vec);
             std::cout <<"-----------Objects---------------" <<std::endl;
             std::cout <<temp_pos.pos <<std::endl;

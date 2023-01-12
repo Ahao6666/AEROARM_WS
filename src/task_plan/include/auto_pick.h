@@ -1,5 +1,7 @@
 #ifndef AUTO_PICK
 #define AUTO_PICK
+#include <gazebo_msgs/GetModelState.h>
+#include <Eigen/Eigen>
 
 #include "type_define.h"
 #include "end_effector_planning.h"
@@ -47,6 +49,7 @@ private:
     workspace workspace_;
     path_point start_pt_, end_pt_;
     int num_objects_;
+    gazebo_msgs::GetModelState get_model_state_srv_msg_;    //pose data from gazebo
 
     // constrants 
     double vel_end_,acc_end_; // end-effector constrants

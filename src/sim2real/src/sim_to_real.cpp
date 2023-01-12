@@ -128,13 +128,13 @@ bool sim2realclass::cmd_gripper_mode_Callback(sim2real::cmd_mode::Request  &req,
     
     case mod_shrink:
       gripper_cmd_.gripper_left = -0.25;
-      gripper_cmd_.gripper_right = 1.0;
+      gripper_cmd_.gripper_right = 0.25;
       gripper_cmd_pub_.publish(gripper_cmd_);
       // ROS_INFO("gripper_server mod_shrink");
       Cmd_mode_=mod_wait;
       break;
     case mod_prepare:
-      gripper_cmd_.gripper_left = 0.25;
+      gripper_cmd_.gripper_left = 1.0;
       gripper_cmd_.gripper_right = -1.0;
       gripper_cmd_pub_.publish(gripper_cmd_);
       // ROS_INFO("gripper_server mod_prepare");
