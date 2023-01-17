@@ -81,7 +81,13 @@ void auto_pick::set_work_space(Eigen::MatrixXd A_w, Eigen::VectorXd b_u_w,
 bool auto_pick::traj_out_call(task_plan::traj_out_msgRequest& request,task_plan::traj_out_msgResponse& response)
 {
     // time align
-    if (!task_begin_flag_)
+    // TODO: add a function to jurge time interval: the current time and the last time.
+    // if Dtime > X, then task_begin_flag_ = false.
+
+    
+
+
+    if (!task_begin_flag_ )
     {
         task_begin_flag_ = true;
         flying_plan_.time_align();

@@ -429,18 +429,19 @@ void clikRos::Gripper_control()
     {
         Gripper_mode.request.mode = 1;
         // 发送模式指令
-        if (gripper_client.call(Gripper_mode) && Gripper_mode.response.result)
-        {
-            ROS_INFO("CLIK: Gripper is true;");
-        } 
+        if (gripper_client.call(Gripper_mode) && Gripper_mode.response.result);
+        // {
+            
+        //     ROS_INFO("CLIK: Gripper is true;");
+        // } 
     }
     else{
         Gripper_mode.request.mode = 0;
         // 发送模式指令
-        if (gripper_client.call(Gripper_mode) && Gripper_mode.response.result)
-        {
-            ROS_INFO("CLIK: Gripper is false;");
-        } 
+        if (gripper_client.call(Gripper_mode) && Gripper_mode.response.result);
+        // {
+        //     ROS_INFO("CLIK: Gripper is false;");
+        // } 
     }
 }
 
