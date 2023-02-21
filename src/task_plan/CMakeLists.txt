@@ -245,3 +245,7 @@ target_link_libraries(traj_solver
  ${catkin_LIBRARIES}
  osqp  # library name
 )
+
+add_executable(box_pose_pub src/box_pose_pub.cpp)
+add_dependencies(box_pose_pub ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+target_link_libraries(box_pose_pub ${GAZEBO_LIBRARIES} ${catkin_LIBRARIES})
