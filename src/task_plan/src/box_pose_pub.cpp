@@ -15,9 +15,9 @@ int main(int argc, char **argv)
 {
     ros::init(argc, argv, "box_pose_pub_node");
     ros::NodeHandle nh;
-    float length = 1.2;
-    float width = 1.0;
-    float hight = 1.5;
+    float length = 2.68129; //1;   //3.01935;
+    float width = 1;    //2.86748;  //1.14714;
+    float hight = 1;
     center_Pub = nh.advertise<geometry_msgs::PoseStamped>("mavros/box_pose/box_0_center", 10);
     corner_Pub = nh.advertise<task_plan::corner>("mavros/box_pose/box_0_corner", 10);
 	gazebo_msgs::GetModelState get_model_state_srv_msg_;
@@ -30,7 +30,7 @@ int main(int argc, char **argv)
 
     while(ros::ok()){
         //get the 'Big box_0' model state from gazebo
-        get_model_state_srv_msg_.request.model_name = "Big box_0";
+        get_model_state_srv_msg_.request.model_name = "unit_box_1";
         get_model_state_srv_msg_.request.relative_entity_name = "link";
         // "link" is the entity name when I add a Big box_0::link in gazebo
         get_model_state_client_.call(get_model_state_srv_msg_);
