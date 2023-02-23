@@ -168,22 +168,10 @@ void auto_pick::get_object_vector(XmlRpc::XmlRpcValue &position,XmlRpc::XmlRpcVa
         for (size_t i = 0; i < position.size(); i++)
         {
             XmlRpc::XmlRpcValue data_list1(position[i]);
-            // 没有使用object.yaml中的object数据,而是直接从Gazebo中获取目标位置，并完成坐标转换
-            // temp_pos.pos = Eigen::Vector3d(data_list1[0],data_list1[1],data_list1[2]);
-            temp_pos.pos = Eigen::Vector3d(get_model_state_srv_msg_.response.pose.position.x,
-                                            (-1) * get_model_state_srv_msg_.response.pose.position.y,
-                                            0.69 - get_model_state_srv_msg_.response.pose.position.z);
+            temp_pos.pos = Eigen::Vector3d(data_list1[0],data_list1[1],data_list1[2]);
             temp_pos.constrant_angle = double(angle[i]);
             XmlRpc::XmlRpcValue data_list3(attitude[i]);
-            Eigen::Quaterniond quaternion;     // {w,x,y,z}
-            quaternion.x() = get_model_state_srv_msg_.response.pose.orientation.x;
-            quaternion.y() = get_model_state_srv_msg_.response.pose.orientation.y;
-            quaternion.z() = get_model_state_srv_msg_.response.pose.orientation.z;
-            quaternion.w() = get_model_state_srv_msg_.response.pose.orientation.w;
-            Eigen::Vector3d temp_vec = quaternion.matrix().eulerAngles(2,1,0); 
-            std::swap(temp_vec[0],temp_vec[2]); //switch the temp_vec[0] and temp_vec[2], so temp_vec[roll, pitch, yaw]
-            ROS_INFO("roll=%f,pitch=%f,yaw=%f",temp_vec[0],temp_vec[1],temp_vec[2]);
-            // Eigen::Vector3d temp_vec = Eigen::Vector3d(data_list3[0],data_list3[1],data_list3[2]);
+            Eigen::Vector3d temp_vec = Eigen::Vector3d(data_list3[0],data_list3[1],data_list3[2]);
             temp_pos.get_euler(temp_vec);
             std::cout <<"-----------Objects---------------" <<std::endl;
             std::cout <<temp_pos.pos <<std::endl;

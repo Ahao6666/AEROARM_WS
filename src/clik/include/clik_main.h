@@ -114,7 +114,7 @@ private:
 
     ros::ServiceClient manipulator_client; // 客户端修改模式
     ros::ServiceClient set_mode_client; // 客户端 修改飞机的模式
-    ros::ServiceClient gripper_client; // 客户端修改gripper模式
+    // ros::ServiceClient gripper_client; // 客户端修改gripper模式
 
     bool reset_CLIK_flag_;
     bool on_off_manipulator_flag_; // 机械臂收放状态：false放，true收
@@ -126,7 +126,7 @@ private:
     bool first_on_manipulator;// 首次收sho进入机械臂状态
     bool first_on_gripper;// 首次收sho进入gripper
     bool coordinate_running_flag_;// 协调控制已经进入
-    bool gripper_switch_;     //机械爪收放判断
+    // bool gripper_switch_;     //机械爪收放判断
 
     ros::Time last_off_manipulator; // 首次进入放机械臂状态时间
     ros::Time last_on_manipulator; // 首次进入放机械臂状态时间
@@ -174,7 +174,7 @@ private:
    
 
     bool isManupulator(const mavros_msgs::RCIn& rcin);
-    bool isGripper(const mavros_msgs::RCIn& rcin);
+    // bool isGripper(const mavros_msgs::RCIn& rcin);
     bool isCoordinate(const mavros_msgs::RCIn& rcin);
     void coordinateManipulator2Body(const  Eigen::Vector3d& p_mani, Eigen::Vector3d& p_body);
     void  coordinateBody2Manipulator(const Eigen::Vector3d& p_body , Eigen::Vector3d& p_mani );
@@ -199,7 +199,7 @@ private:
     // 收上机械臂
     void putUpMnipulator();
     // 机械爪控制
-    void Gripper_control();
+    // void Gripper_control();
     // 协调控制
     void handleCoordinate();
     // 无人机安全飞行限制

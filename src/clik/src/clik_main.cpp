@@ -94,8 +94,8 @@ clikRos::clikRos()
         // 【客户端】修改机械臂模式
         manipulator_client = nh.serviceClient<clik::manipulator_mode>("control_signal/command_mode");
 
-        // 【客户端】修改机械臂模式
-        gripper_client = nh.serviceClient<clik::gripper_mode>("control_signal/command_gripper_mode");
+        // // 【客户端】修改机械臂模式
+        // gripper_client = nh.serviceClient<clik::gripper_mode>("control_signal/command_gripper_mode");
 
         //【客户端】 修改飞机飞行模式 发送给飞控
         set_mode_client = nh.serviceClient<mavros_msgs::SetMode>("mavros/set_mode");
@@ -320,10 +320,10 @@ bool clikRos::isManupulator(const mavros_msgs::RCIn& rcin)
     return ((rcin.channels.size()>=7) && (rcin.channels.at(9)>1500));//机械臂收放 通道10-SA
 }
 
-bool clikRos::isGripper(const mavros_msgs::RCIn& rcin)
-{
-    return ((rcin.channels.size()>=7) && (rcin.channels.at(10)>1500));//机械爪收放，通道11-SG
-}
+// bool clikRos::isGripper(const mavros_msgs::RCIn& rcin)
+// {
+//     return ((rcin.channels.size()>=7) && (rcin.channels.at(10)>1500));//机械爪收放，通道11-SG
+// }
 
 bool clikRos::isCoordinate(const mavros_msgs::RCIn& rcin)
 {
@@ -343,7 +343,7 @@ void clikRos::setOnGroundOrigin()
 void clikRos::resetCLIK()
 {
     on_off_manipulator_flag_ = false;// false：摆臂垂直 true：摆臂水平
-    gripper_switch_ = false;
+    // gripper_switch_ = false;
     resetOnGroundOrigin();
 }
 void clikRos::resetOnGroundOrigin()
@@ -423,27 +423,27 @@ void clikRos::putUpMnipulator()
     }
 }
 
-void clikRos::Gripper_control()
-{
-    if (gripper_switch_ )
-    {
-        Gripper_mode.request.mode = 1;
-        // 发送模式指令
-        if (gripper_client.call(Gripper_mode) && Gripper_mode.response.result);
-        // {
+// void clikRos::Gripper_control()
+// {
+//     if (gripper_switch_ )
+//     {
+//         Gripper_mode.request.mode = 1;
+//         // 发送模式指令
+//         if (gripper_client.call(Gripper_mode) && Gripper_mode.response.result);
+//         // {
             
-        //     ROS_INFO("CLIK: Gripper is true;");
-        // } 
-    }
-    else{
-        Gripper_mode.request.mode = 0;
-        // 发送模式指令
-        if (gripper_client.call(Gripper_mode) && Gripper_mode.response.result);
-        // {
-        //     ROS_INFO("CLIK: Gripper is false;");
-        // } 
-    }
-}
+//         //     ROS_INFO("CLIK: Gripper is true;");
+//         // } 
+//     }
+//     else{
+//         Gripper_mode.request.mode = 0;
+//         // 发送模式指令
+//         if (gripper_client.call(Gripper_mode) && Gripper_mode.response.result);
+//         // {
+//         //     ROS_INFO("CLIK: Gripper is false;");
+//         // } 
+//     }
+// }
 
 void clikRos::handlePainting()
 {
@@ -595,8 +595,8 @@ void clikRos::handleCoordinate()
         Delts_cont.time_stamp = now_time;
         Delts_cont.X =  0.0;
         Delts_cont.Y =  0.0;
-        Delts_cont.Z = -0.22;
-        safeManipulator(Delts_cont); 
+        Delts_cont.Z = -0.14;
+        // safeManipulator(Delts_cont); 
         Delta_pub.publish(Delts_cont);
         LOGFMTD("\t%s\t%f\t", "Peb_cmd_x", Delts_cont.X);
         LOGFMTD("\t%s\t%f\t", "Peb_cmd_y", Delts_cont.Y);
@@ -778,8 +778,8 @@ void clikRos::mainLoop()
     // 修补剂操作
     handlePainting();
     // 机械爪收放判断
-    gripper_switch_ = isGripper(m_rcin_);
-    Gripper_control();
+    // gripper_switch_ = isGripper(m_rcin_);
+    // Gripper_control();
     /*--------- 协调控制--------- */
     // 协调控制开始
     if (coordinate_flag_  && (ros::Time::now() - last_coordinate > ros::Duration(1.0)))// 地面调试
