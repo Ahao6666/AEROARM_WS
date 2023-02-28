@@ -11,7 +11,6 @@
 #include <tf/transform_datatypes.h>
 #include <vector>
 #include "sensor_msgs/JointState.h"
-#include "sim2real/gripper_cmd.h"
 
 using namespace std;
 
@@ -32,7 +31,6 @@ class Inverse_Kinematics_Talker{
 		double theta1_save_, theta2_save_, theta3_save_;
 		// for inverse kinematics computing
 		double x_, y_, z_;
-		std_msgs::Float32 gripper1_, gripper2_;
 		// from trajGenerator
 		tf::Vector3 desiredPos;
 
@@ -46,8 +44,6 @@ class Inverse_Kinematics_Talker{
 
 		// sub trajGenerator cb
 		void endEffe_sub_cb(const geometry_msgs::Point& msg);
-		// sub gripper Generator cb
-		void gripper_sub_cb(const sim2real::gripper_cmd& msg);
 		// inverse kinematics initialization
 		void setPos();
 
@@ -61,15 +57,12 @@ class Inverse_Kinematics_Talker{
 		ros::Publisher joint_gazebo_pub1;
 		ros::Publisher joint_gazebo_pub2;
 		ros::Publisher joint_gazebo_pub3;
-		ros::Publisher joint_gripper_gazebo_pub1;
-		ros::Publisher joint_gripper_gazebo_pub2;
 
 		// pub to rviz node
 		ros::Publisher state_pub;
 
 		// sub trajGenerator
 		ros::Subscriber endEffe_sub;
-		ros::Subscriber gripper_sub;
 
 };
 

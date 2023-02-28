@@ -66,16 +66,12 @@ Inverse_Kinematics_Talker::Inverse_Kinematics_Talker(int argc, char** argv){
   	joint_gazebo_pub1 = nh_.advertise<std_msgs::Float32>("/joint/delta_1/position_cmd", 1000);
   	joint_gazebo_pub2 = nh_.advertise<std_msgs::Float32>("/joint/delta_2/position_cmd", 1000);
   	joint_gazebo_pub3 = nh_.advertise<std_msgs::Float32>("/joint/delta_3/position_cmd", 1000);
-  	joint_gripper_gazebo_pub1 = nh_.advertise<std_msgs::Float32>("/joint/gripper1_1/position_cmd", 1000);
-  	joint_gripper_gazebo_pub2 = nh_.advertise<std_msgs::Float32>("/joint/gripper1_2/position_cmd", 1000);
 
 	// to rviz
   	state_pub = nh_.advertise<sensor_msgs::JointState>("joint_states", 1000);
 
 
   	endEffe_sub = nh_.subscribe("/traj/rel_posi", 1, &Inverse_Kinematics_Talker::endEffe_sub_cb, this);
-  	gripper_sub = nh_.subscribe("/gripper_cmd", 1, &Inverse_Kinematics_Talker::gripper_sub_cb, this);
-
 
   	theta1_=0;
   	theta2_=0;
@@ -121,12 +117,3 @@ void Inverse_Kinematics_Talker::endEffe_sub_cb(const geometry_msgs::Point& msg){
 	desiredPos.setValue(msg.x,msg.y,msg.z);
 
 }
-void Inverse_Kinematics_Talker::gripper_sub_cb(const sim2real::gripper_cmd& msg){
-	gripper1_.data = msg.gripper_left;
-	joint_gripper_gazebo_pub1.publish(gripper1_);
-	gripper2_.data = msg.gripper_right;
-	joint_gripper_gazebo_pub2.publish(gripper2_);
-
-}
-
-
