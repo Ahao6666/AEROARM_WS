@@ -6,14 +6,14 @@ auto_pick::auto_pick(/* args */)
     traj_result_server = nh_.advertiseService("trajectory_result", &auto_pick::traj_out_call,this);
     end_result_server = nh_.advertiseService("end_effector_result", &auto_pick::end_out_call,this);
     // get load package state client
-    ros::ServiceClient get_model_state_client_ = nh_.serviceClient<gazebo_msgs::GetModelState>(
-		"/gazebo/get_model_state");
+    // ros::ServiceClient get_model_state_client_ = nh_.serviceClient<gazebo_msgs::GetModelState>(
+		// "/gazebo/get_model_state");
 	// geometry_msgs::Point payload_pos_;    // {float64 x, float64 y, float z}
     //get the 'payload box' model state from gazebo
-    get_model_state_srv_msg_.request.model_name = "payload box";
-    get_model_state_srv_msg_.request.relative_entity_name = "link";
+    // get_model_state_srv_msg_.request.model_name = "payload box";
+    // get_model_state_srv_msg_.request.relative_entity_name = "link";
     // "link" is the entity name when I add a pv_car in gazebo
-    get_model_state_client_.call(get_model_state_srv_msg_);
+    // get_model_state_client_.call(get_model_state_srv_msg_);
     // std::cout<<"payload box z:"<<get_model_state_srv_msg_.response.pose.position.z<<std::endl;
     double yaw_offset;
     nh_.param<double>("/clik/yaw_offset_",yaw_offset_,-1.571589f);

@@ -30,7 +30,7 @@ int main(int argc, char **argv)
 
     while(ros::ok()){
         //get the 'Big box_0' model state from gazebo
-        get_model_state_srv_msg_.request.model_name = "payload box";
+        get_model_state_srv_msg_.request.model_name = "screen_12";
         get_model_state_srv_msg_.request.relative_entity_name = "link";
         // "link" is the entity name when I add a Big box_0::link in gazebo
         get_model_state_client_.call(get_model_state_srv_msg_);
