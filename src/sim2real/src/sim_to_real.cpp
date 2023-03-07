@@ -114,13 +114,13 @@ void sim2realclass::cmd_gripper_Callback(const std_msgs::String::ConstPtr & msg)
 {
   ROS_INFO("接收到的数据：%s", msg->data.c_str());
   if(msg->data[3] == '1'){       //gripper is close
-    gripper_cmd_.gripper_left = -0.25;
-    gripper_cmd_.gripper_right = 0.25;
+    gripper_cmd_.gripper_left = -0.02;
+    gripper_cmd_.gripper_right = 0.02;
     gripper_cmd_pub_.publish(gripper_cmd_);
   }
   else if((msg->data[3] == '0')){    //gripper is open
-    gripper_cmd_.gripper_left = 1.0;
-    gripper_cmd_.gripper_right = -1.0;
+    gripper_cmd_.gripper_left = 0.02;
+    gripper_cmd_.gripper_right = -0.02;
     gripper_cmd_pub_.publish(gripper_cmd_);
   }
   else
