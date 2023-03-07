@@ -4,5 +4,6 @@
     <node pkg="task_plan" type="traj_solver" name="auto_pick" output="screen">
         <rosparam command="load" file="$(find task_plan)/launch/objects.yaml"/>
         <rosparam command="load" file="$(find task_plan)/launch/corridor.yaml"/>
+        <rosparam command="load" file="$(find task_plan)/launch/obstacle.yaml"/>
     </node>
 </launch>

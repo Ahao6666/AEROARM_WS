@@ -1,10 +1,9 @@
 #ifndef AUTO_PICK
 #define AUTO_PICK
-#include <gazebo_msgs/GetModelState.h>
-#include <Eigen/Eigen>
 
 #include "type_define.h"
 #include "end_effector_planning.h"
+#include "std_msgs/String.h"
 #include"trajectory_solver.h"
 
 class auto_pick
@@ -18,6 +17,7 @@ private:
     ros::NodeHandle nh_;
     ros::ServiceServer traj_result_server;
     ros::ServiceServer end_result_server;
+    ros::Publisher tool_chatter_pub;
 
     void corridor_management(); // 管理和整理安全通道，主要是添加了接触和可达空间
     void generate_reachable_space();// 生成接触和可达空间
@@ -32,7 +32,9 @@ private:
     bool end_out_call(task_plan::traj_out_msgRequest& request,task_plan::traj_out_msgResponse& response);
     void get_object_vector(XmlRpc::XmlRpcValue &position,XmlRpc::XmlRpcValue &angle,XmlRpc::XmlRpcValue &attitude);
     void get_path_cooridor(XmlRpc::XmlRpcValue &start,XmlRpc::XmlRpcValue &end,XmlRpc::XmlRpcValue &num_polyhedron,XmlRpc::XmlRpcValue &corridor);
-
+    void get_obstalces(XmlRpc::XmlRpcValue &obstalces);
+    bool Berizer_fit(vector<Eigen::Vector3d> P, vector<double> t,  bezier& bezier_flying);
+    void calculate_initial_end(ros::Time time_in, pick_object po_in, ini_end_effector& out_ini);
     vector<end_effector_planning> end_plan_;
     trajectory_solver flying_plan_;
 
@@ -46,24 +48,17 @@ private:
     vector<int> index_obj_polyhedron_;
     vector<int> index_obj_reach_;
     vector<ini_end_effector> ini_end_st_;
+    vector<vector<Eigen::Vector3d>> envir_;
     workspace workspace_;
     path_point start_pt_, end_pt_;
     int num_objects_;
-    gazebo_msgs::GetModelState get_model_state_srv_msg_;    //pose data from gazebo
 
     // constrants 
     double vel_end_,acc_end_; // end-effector constrants
-    double leng_cnt_;
-    double vel_cnt_;
     double time_hold_;
     // 重要参数
-    double time_reach_; // from launch file
-    double time_contact_; // from launch file
     double vel_reach_; // from launch file
     double acc_reach_;// from launch file
-    double vel_cont_; // from launch file
-    double time_cnt_; // from launch file
-    double rate_cont_reach_; // from launch file
 
     // Params
     Eigen::Matrix3d rotation_delta_b_;
@@ -72,6 +67,8 @@ private:
     Eigen::Vector3d hold_manipulator_set_;
 
     bool task_begin_flag_ = false;
+
+    vector<ros::Time> gripper_open_time_;
 
 
 

@@ -17,7 +17,7 @@ using namespace std;
 #define pi 3.14159265358979323846
 #define updateRate 400
 
-#define z_ed -0.21
+#define z_ed -0.14
 class Inverse_Kinematics_Talker{
 	private:
 		ros::NodeHandle nh_;
@@ -29,8 +29,10 @@ class Inverse_Kinematics_Talker{
 		// inverse kinematics results
 		double theta1_, theta2_, theta3_;
 		double theta1_save_, theta2_save_, theta3_save_;
+
 		// for inverse kinematics computing
 		double x_, y_, z_;
+
 		// from trajGenerator
 		tf::Vector3 desiredPos;
 
@@ -44,6 +46,7 @@ class Inverse_Kinematics_Talker{
 
 		// sub trajGenerator cb
 		void endEffe_sub_cb(const geometry_msgs::Point& msg);
+
 		// inverse kinematics initialization
 		void setPos();
 

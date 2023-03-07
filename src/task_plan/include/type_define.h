@@ -33,6 +33,40 @@ struct bezier{
   double*   coef_y;     // coefficient
   double*   coef_z;     // coefficient
   ros::Time times;    // begin time 
+  bezier(){};
+  bezier(int order_in, double scale_in, ros::Time times_in)
+  {
+    order = order_in;
+    scale = scale_in;
+    times = times_in;
+    coef_x = new double[order+1];
+    coef_y = new double[order+1];
+    coef_z = new double[order+1];
+  }
+  void show()
+    {
+      std::cout << "---bezier:---"  <<std::endl;
+      std::cout << "order:"  << order <<std::endl;
+      std::cout << "scale:"  << scale <<std::endl;
+      std::cout << "coef_x:"  <<std::endl;
+      for (size_t i = 0; i <= order; i++)
+      {
+        printf("%f\t",coef_x[i]);
+      }
+      printf("\n");
+      std::cout << "coef_y:"  <<std::endl;
+      for (size_t i = 0; i <= order; i++)
+      {
+        printf("%f\t",coef_y[i]);
+      }
+      printf("\n");
+       std::cout << "coef_z:"  <<std::endl;
+      for (size_t i = 0; i <= order; i++)
+      {
+        printf("%f\t",coef_z[i]);
+      }
+      printf("\n");
+    }  
 } ;
 
 struct constraint

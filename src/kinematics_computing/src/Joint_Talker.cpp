@@ -17,8 +17,7 @@ int main(int argc, char **argv){
     		talker.joint_gazebo_pub2.publish(msg);
 		msg.data=talker.getJointTheta().getZ()-theta_offset;
     		talker.joint_gazebo_pub3.publish(msg);
-		
-        stateMsg.header.stamp=ros::Time::now();
+                stateMsg.header.stamp=ros::Time::now();
 		stateMsg.name={"FlyingDeltaArmBase__link_0_JOINT_1", "FlyingDeltaArmBase__link_0_JOINT_2", "FlyingDeltaArmBase__link_0_JOINT_3"};
 		stateMsg.position={talker.getJointTheta().getX()-1.1,talker.getJointTheta().getZ()-1.1,talker.getJointTheta().getY()-1.1};
 		stateMsg.velocity={};

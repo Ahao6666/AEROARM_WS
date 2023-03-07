@@ -16,7 +16,7 @@ sim2realclass::sim2realclass()
     cmd_mod_sub_ = nh.advertiseService("control_signal/command_mode",  &sim2realclass::cmd_mode_Callback, this);
     // 接受上位机机械爪控制指令
     cmd_gripper_mod_sub_ = nh.subscribe("/chatter_tool", 10, &sim2realclass::cmd_gripper_Callback, this);  
-    //接收位置指令
+   //接收位置指令
     cmd_pos_sub_ =nh.subscribe("/control_signal/pos_pub", 10,  &sim2realclass::cmd_pos_Callback, this); 
     // 发送末端位置指令
     endEffe_traj_pub_  = nh.advertise<geometry_msgs::Point>("/traj/rel_posi", 1); 
@@ -95,7 +95,7 @@ bool sim2realclass::cmd_mode_Callback(sim2real::cmd_mode::Request  &req,
       case mod_prepare:
         traj_endEffe_.x = 0;
         traj_endEffe_.y = 0;
-        traj_endEffe_.z = -0.12;
+        traj_endEffe_.z = -0.18;
         endEffe_traj_pub_.publish(traj_endEffe_);
         Cmd_mode_=mod_wait;
         break;
@@ -107,6 +107,7 @@ bool sim2realclass::cmd_mode_Callback(sim2real::cmd_mode::Request  &req,
 
   return true;
 }
+
 
 //【回调函数】 接受上位机机械爪控制指令
 void sim2realclass::cmd_gripper_Callback(const std_msgs::String::ConstPtr & msg)

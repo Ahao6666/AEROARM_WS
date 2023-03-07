@@ -186,7 +186,7 @@ inline void row_expansion(Eigen::MatrixXd A, Eigen::MatrixXd B, Eigen::MatrixXd&
     if (n1==n2)
     {
         C.resize(m1+m2,n1);
-    C<<A, B;
+        C<<A, B;
     }
     else
     {
@@ -227,5 +227,40 @@ inline int combinatorial(int n, int k) // for calculate n choose k combination p
 {
     return fac(n) / (fac(k) * fac(n - k));
 };
+
+//  阶乘计算函数
+inline int factorial(int n)    
+{    
+    if(n<0)    
+        return(-1); /*Wrong value*/      
+    if(n==0)    
+        return(1);  /*Terminating condition*/    
+    else    
+    {    
+        return(n*factorial(n-1));
+    }    
+}
+
+// 矩阵求伪逆的方法
+template<typename _Matrix_Type_> 
+inline _Matrix_Type_ pseudoInverse(const _Matrix_Type_ &a, double epsilon = 
+    std::numeric_limits<double>::epsilon()) 
+{  
+    Eigen::JacobiSVD< _Matrix_Type_ > svd(a ,Eigen::ComputeThinU | Eigen::ComputeThinV);  
+    double tolerance = epsilon * std::max(a.cols(), a.rows()) *svd.singularValues().array().abs()(0);  
+    return svd.matrixV() *  (svd.singularValues().array().abs() > tolerance).select(svd.singularValues().array().inverse(), 0).matrix().asDiagonal() * svd.matrixU().adjoint(); 
+} 
+
+
+inline void print_covex_hub(vector<Eigen::Vector3d> c_h)
+{
+    for (size_t i = 0; i < c_h.size(); i++)
+    {
+        std::cout << c_h[i][0] << "\t"<< c_h[i][1]<< "\t"<< c_h[i][2]<< std::endl;
+    }
+}
+
+
+
 
 #endif

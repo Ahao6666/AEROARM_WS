@@ -4,60 +4,18 @@ end_effector_planning::end_effector_planning()
 {
     settings  = (OSQPSettings *)c_malloc(sizeof(OSQPSettings));
     data  = (OSQPData *)c_malloc(sizeof(OSQPData));
+    obs_set_.resize(envir_.size());
 }
 
-void end_effector_planning::get_objectives(pick_object obj, path_point end_pt,  double vel_cnt, double time_cnt)
+void end_effector_planning::get_objectives(pick_object obj,  double time_to_hold)
 {
     obj_.clear();
     obj_.push_back(obj);
-    end_pt_ = end_pt;
-    Eigen::Vector3d temp = obj.pos - end_pt.pos;
-    length_to_cnt_ = temp.norm();
-    vector_cnt_ = 1/length_to_cnt_ * temp;
-    vel_cnt_ = vel_cnt;
-    time_cnt_ = time_cnt;
-    time_to_hold_ = time_to_hold_;
-    end_coef_beizer_.resize(end_order_beizer_+1);
-    end_coef_beizer_[0] = 0;
-    end_coef_beizer_[5] = length_to_cnt_;
-    end_coef_beizer_[1] = vel_cnt_/end_order_beizer_ + end_coef_beizer_[0];
-    end_coef_beizer_[4] = end_coef_beizer_[5];
-    end_coef_beizer_[2] = 2.0*end_coef_beizer_[1]- end_coef_beizer_[0];
-    end_coef_beizer_[3] = 2.0*end_coef_beizer_[4]- end_coef_beizer_[5];
-}
-
-void end_effector_planning::end_contact_out(double t, path_point& out)
-{
-    double b_out_p = 0;
-    double b_out_v = 0;
-    double b_out_a = 0;
-
-    t = t/time_cnt_;
-
-    if (t>1)
-    {
-        t = 1;
-        std::cout << "End effector contact trajectory generator is run out time!" << std::endl;
-    }
-    double temp;
-    for (size_t i = 0; i < end_order_beizer_ + 1; i++)
-    {
-        temp = combinatorial(end_order_beizer_, i);
-        b_out_p = b_out_p + end_coef_beizer_[i] * temp * pow(t,i) * pow(1-t, end_order_beizer_-i);
-    }
-    for (size_t i = 0; i < end_order_beizer_ ; i++)
-    {
-        temp = combinatorial(end_order_beizer_ - 1, i);
-        b_out_v = b_out_v + end_order_beizer_*(end_coef_beizer_[i+1] - end_coef_beizer_[i]) * temp * pow(t,i) * pow(1-t, end_order_beizer_ - 1-i);
-    }
-    for (size_t i = 0; i < end_order_beizer_ - 1 ; i++)
-    {
-        temp = combinatorial(end_order_beizer_ - 2, i);
-        b_out_a = b_out_a + end_order_beizer_ * (end_order_beizer_-1) * (end_coef_beizer_[i+2] - 2.0 * end_coef_beizer_[i+1] + end_coef_beizer_[i]) * temp * pow(t,i) * pow(1-t, end_order_beizer_ - 2-i);
-    }
-    out.pos = end_pt_.pos + b_out_p * vector_cnt_;
-    out.vel  = end_pt_.vel + 1.0/time_cnt_ * b_out_v * vector_cnt_;
-    out.acc = end_pt_.acc + 1.0/(time_cnt_ * time_cnt_) * b_out_a * vector_cnt_;
+    end_pt_.pos = obj.pos;
+    end_pt_.vel = Eigen::Vector3d(0.0, 0.0, 0.0);
+    end_pt_.acc = Eigen::Vector3d(0.0, 0.0, 0.0);
+    end_pt_.show();
+    time_to_hold_ = time_to_hold;
 }
 
 void end_effector_planning::get_initial_states(ini_end_effector ini_pt)
@@ -152,6 +110,8 @@ void end_effector_planning::get_constraint_QP()
             vector_expansion(upp_vector_,  path_constraint_[i].b_u_pos[j]*vec_one, upp_vector_);
         }
     }
+
+
     Eigen::MatrixXd mat_tep;//储存每次计算结果
     Eigen::MatrixXd mat_tep_1;// 储存每个安全多面体结果
     Eigen::MatrixXd mat_tep_2(0,0);// 储存整个安全通道上的结果
@@ -197,6 +157,7 @@ void end_effector_planning::get_constraint_QP()
         diagonal_expansion(mat_tep_2, mat_tep_1, mat_tep_2);
     }
     row_expansion(A_matrix_, mat_tep_2, A_matrix_);
+
     // 连续性约束, 三阶连续
     Eigen::MatrixXd Mat_continue((n_segment-1)*3*3,n_segment*ctrl_3d_num);
     Eigen::VectorXd V_continue((n_segment-1)*3*3);
@@ -304,20 +265,98 @@ void end_effector_planning::get_constraint_QP()
     row_expansion(A_matrix_, Mat_path,  A_matrix_);
     vector_expansion(low_vector_, Vec_path,   low_vector_);
     vector_expansion(upp_vector_, Vec_path, upp_vector_);
+    
+    // 抓取末端条件约束
+    int col_temp = A_matrix_.cols();
+    Eigen::MatrixXd Mat_grip(5,col_temp);
+    Eigen::VectorXd Vec_grip_u(5);
+    Eigen::VectorXd Vec_grip_l(5);
+    Mat_grip.setZero();
+    Vec_grip_u.setZero();
+    Vec_grip_l.setZero();
+
+    VectorXd CList   = bernstein_.getC()[traj_order_];
+    double t = (path_constraint_[end_element].s_scale  - dt_last_step)/path_constraint_[end_element].s_scale ;
+    
+    for (size_t i = 0; i < (traj_order_ +1); i++)
+    {
+        Mat_grip(0, col_temp - 3*(traj_order_ + 1) + i) =  path_constraint_[end_element].s_scale * CList(i) * pow(t, i) * pow((1 - t), (traj_order_ - i) );
+        Mat_grip(0, col_temp - 1*(traj_order_ + 1) + i) =  tan_gamma * path_constraint_[end_element].s_scale * CList(i) * pow(t, i) * pow((1 - t), (traj_order_ - i) );
+    }
+    Vec_grip_u[0]  = end_pt_.pos[0] + tan_gamma * end_pt_.pos[2];
+    Vec_grip_l[0]  = -OSQP_INFTY;
+    // std:: cout << "---------------------------" << std::endl;
+    // std:: cout << Vec_grip_u << std::endl;
+    // std:: cout << Vec_grip_l << std::endl;
+
+    for (size_t i = 0; i < (traj_order_ +1); i++)
+    {
+        Mat_grip(1, col_temp - 3*(traj_order_ + 1) + i) =  path_constraint_[end_element].s_scale * CList(i) * pow(t, i) * pow((1 - t), (traj_order_ - i) );
+        Mat_grip(1, col_temp - 1*(traj_order_ + 1) + i) =  -tan_gamma * path_constraint_[end_element].s_scale * CList(i) * pow(t, i) * pow((1 - t), (traj_order_ - i) );
+    }
+    Vec_grip_u[1]  = OSQP_INFTY;
+    Vec_grip_l[1]  = end_pt_.pos[0] - tan_gamma * end_pt_.pos[2];
+
+    for (size_t i = 0; i < (traj_order_ +1); i++)
+    {
+        Mat_grip(2, col_temp - 2*(traj_order_ + 1) + i) =  path_constraint_[end_element].s_scale * CList(i) * pow(t, i) * pow((1 - t), (traj_order_ - i) );
+        Mat_grip(2, col_temp - 1*(traj_order_ + 1) + i) =  tan_gamma * path_constraint_[end_element].s_scale * CList(i) * pow(t, i) * pow((1 - t), (traj_order_ - i) );
+    }
+    Vec_grip_u[2]  = end_pt_.pos[1] + tan_gamma * end_pt_.pos[2];
+    Vec_grip_l[2]  = -OSQP_INFTY;
+
+    for (size_t i = 0; i < (traj_order_ +1); i++)
+    {
+        Mat_grip(3, col_temp - 2*(traj_order_ + 1) + i) =  path_constraint_[end_element].s_scale * CList(i) * pow(t, i) * pow((1 - t), (traj_order_ - i) );
+        Mat_grip(3, col_temp - 1*(traj_order_ + 1) + i) =  -tan_gamma * path_constraint_[end_element].s_scale * CList(i) * pow(t, i) * pow((1 - t), (traj_order_ - i) );
+    }
+    Vec_grip_u[3]  = OSQP_INFTY;
+    Vec_grip_l[3]  =  end_pt_.pos[1] - tan_gamma * end_pt_.pos[2];
+
+    // for (size_t i = 0; i < (traj_order_ +1); i++)
+    // {
+    //     Mat_grip(4, col_temp - 1*(traj_order_ + 1) + i) =  path_constraint_[end_element].s_scale * CList(i) * pow(t, i) * pow((1 - t), (traj_order_ - i) );
+    // }
+    // Vec_grip_u[4]  = end_pt_.pos[2] - dl_grap;
+    // Vec_grip_l[4]  = -OSQP_INFTY;
+
+    // std:: cout << Mat_grip << std::endl;
+
+    row_expansion(A_matrix_, Mat_grip,  A_matrix_);
+    vector_expansion(low_vector_, Vec_grip_l,   low_vector_);
+    vector_expansion(upp_vector_, Vec_grip_u, upp_vector_);
 }
 
 bool end_effector_planning::trajectory_solver_QP()
 {
     get_matrix_quadratic_form();
     get_constraint_QP();
-
-    csc temp_Q;
-    matrix_upptriangular(quad_matrix_, quad_matrix_);
-    matrix_to_csc trans_mat_csc(quad_matrix_,temp_Q);
-    csc temp_A;
-    matrix_to_csc trans_mat_csc_2(A_matrix_, temp_A);
     Eigen::VectorXd temp_q(A_matrix_.cols());
     temp_q.setZero();
+    // 第一次计算
+    QP_solver(quad_matrix_, temp_q);
+    // std::cout << "------------第一次迭代-----------" << std::endl;
+    
+    // 循环计算
+    while (collision_check())
+    {
+        int ii = 1;
+        // std::cout << "------------第"<< ii++<<"次迭代-----------" << std::endl;
+        Eigen::MatrixXd Q_temp = quad_matrix_ + Q_col_;
+        temp_q = temp_q + q_col_;
+        QP_solver(Q_temp, temp_q);
+    }
+    bezier_3d_[0].show();
+}
+void end_effector_planning::QP_solver(Eigen::MatrixXd quad_matrix, Eigen::VectorXd temp_q)
+{
+    csc temp_Q;
+    Eigen::MatrixXd quad_matrix_temp;
+    matrix_upptriangular(quad_matrix, quad_matrix_temp);
+    matrix_to_csc trans_mat_csc(quad_matrix_temp,temp_Q);
+    csc temp_A;
+    matrix_to_csc trans_mat_csc_2(A_matrix_, temp_A);
+    
 
     // Exitflag
     c_int exitflag = 0;
@@ -371,7 +410,7 @@ bool end_effector_planning::trajectory_solver_QP()
     {
         bezier_3d_[i].scale  = path_constraint_[i].s_scale;
         bezier_3d_[i].order = traj_order_;
-        bezier_3d_[i].times = Now_time;
+        bezier_3d_[i].times = ini_pt_[i].time_begin;
         Now_time = Now_time +   ros::Duration( bezier_3d_[i].scale);
         bezier_3d_[i].coef_x = new double[traj_order_+1];
         for (size_t j = 0; j < traj_order_+1; j++)
@@ -388,30 +427,16 @@ bool end_effector_planning::trajectory_solver_QP()
         {
             bezier_3d_[i].coef_z[j] = work->solution->x[i*3*(traj_order_+1) + 2*(traj_order_+1) + j];
         }
-        // std::cout << "----------------"<< i <<"th segment trajectory."<<"----------------------"<< std::endl;
-        // std::cout << "-------------------x-------------------"<< std::endl;
-        // vector_show(bezier_3d_[i].coef_x, traj_order_+1);
-        // std::cout << "-------------------y-------------------"<< std::endl;
-        // vector_show(bezier_3d_[i].coef_y, traj_order_+1);
-        // std::cout << "-------------------z-------------------"<< std::endl;
-        // vector_show(bezier_3d_[i].coef_z, traj_order_+1);
     }
 }
+
+
 
 void end_effector_planning::trajectory_out(ros::Time timeNow, path_point& traj_sp)
 {
     if (timeNow.toSec() >= bezier_3d_[0].times.toSec()  )
     {
         bezier_out(timeNow, bezier_3d_[0], traj_sp);
-    }
-    if ((timeNow.toSec() >= bezier_3d_[0].times.toSec() +  bezier_3d_[0].scale) && (timeNow.toSec() <= bezier_3d_[0].times.toSec() +  bezier_3d_[0].scale + time_cnt_))
-    {
-        double t = timeNow.toSec() - (bezier_3d_[0].times.toSec() +  bezier_3d_[0].scale);
-        end_contact_out( t, traj_sp);
-    }
-    if (timeNow.toSec() >= bezier_3d_[0].times.toSec() +  bezier_3d_[0].scale + time_cnt_)
-    {
-        end_contact_out( 1.0, traj_sp);
     }
 }
 
@@ -482,5 +507,188 @@ bool end_effector_planning::bezier_out(ros::Time timeNow, bezier bezier_in, path
         return 1;
     }
 }
+
+bool end_effector_planning::collision_check()
+{
+    // 初始化
+    for (size_t i = 0; i < obs_set_.size(); i++)
+    {
+        obs_set_[i].term_left = Eigen::Vector3d(0.0, 0.0, 0.0);
+        obs_set_[i].term_right = Eigen::Vector3d(0.0, 0.0, 0.0);
+        obs_set_[i].is_collision = false;
+    }
+    // std::cout << "------------初始化-----------" << std::endl;
+    // 检查碰撞
+    double dtime_step =  path_constraint_[0].s_scale * 0.01;
+    for (size_t i = 0; i < 100; i++)
+    {
+        ros::Time time_col = bezier_3d_[0].times + ros::Duration(i*dtime_step);
+        // std::cout << "------------"<< i <<"----------" << std::endl;
+        gjk_for_traj(time_col);
+    }
+    // std::cout << "------------检查碰撞----------" << std::endl;
+
+    // 计算权重和镜像点
+    for (size_t i = 0; i < obs_set_.size(); i++)
+    {
+        if (obs_set_[i].was_collision)
+        {
+            if (obs_set_[i].is_collision)
+            {
+                obs_set_[i].mirr_pos = obs_set_[i].term_left + obs_set_[i].term_right - obs_set_[i].center;
+                Eigen::Vector3d temp_term = obs_set_[i].term_left - obs_set_[i].term_right;
+                obs_set_[i].lammda = obs_set_[i].lammda + 0.4* temp_term.norm();
+            }
+        }
+    }
+    
+    // 计算矩阵Q和q
+    Q_col_.resize(quad_matrix_.rows(),quad_matrix_.cols());
+    Q_col_.setZero();
+    q_col_.resize(quad_matrix_.rows());
+    q_col_.setZero();
+
+    for (size_t i = 0; i < obs_set_.size(); i++)
+    {
+        if (obs_set_[i].was_collision)
+        {
+            Q_col_ = Q_col_ + obs_set_[i].lammda * MatrixXd::Identity(quad_matrix_.rows(),quad_matrix_.cols());
+            Eigen::VectorXd q_temp(quad_matrix_.rows());
+            for (size_t j = 0; j < traj_order_ +1; j++)
+            {
+                q_temp[j] = -obs_set_[i].lammda *2*obs_set_[i].mirr_pos[0];
+            }
+            for (size_t j = 0; j < traj_order_ +1; j++)
+            {
+                q_temp[j + traj_order_ +1 ] =  -obs_set_[i].lammda *2*obs_set_[i].mirr_pos[1];
+            }
+            for (size_t j = 0; j < traj_order_ +1; j++)
+            {
+                q_temp[j + 2*traj_order_ +2 ] =  -obs_set_[i].lammda *2*obs_set_[i].mirr_pos[2];
+            }
+            q_col_ = q_col_ + q_temp;
+        }
+    } 
+    
+    for (size_t i = 0; i < obs_set_.size(); i++)
+    {
+        if (obs_set_[i].is_collision)
+        {
+            return true;
+        }
+    }
+    return false;
+}
+
+void end_effector_planning::gjk_for_traj(ros::Time time_in)
+{
+    // std::cout << "------------碰撞检测开始----------" << std::endl;
+    // 计算机械臂的凸多面体角点
+    path_point p_body,p_end;
+    bezier_out(time_in, bezier_flying_base_, p_body);
+    // std::cout << "------------飞行平台数据----------" << std::endl;
+    // p_body.show();
+    bezier_out(time_in, bezier_3d_[0], p_end);
+    // std::cout << "------------末端数据----------" << std::endl;
+    // p_end.show();
+    vector<Eigen::Vector3d> vertices;
+    vertices.clear();
+    double r_S = 0.65, r_C = 0.06, l_C = 0.06;
+    Eigen::Vector3d temp;
+    // 角点1
+    temp = p_body.pos + obj_[0].rotation*rotation_delta_b_*Eigen::Vector3d(r_S*cos((1+2)/3*pi),r_S*sin((1+2)/3*pi), 0);
+    vertices.push_back(temp);
+    // 角点2
+    temp = p_body.pos + obj_[0].rotation*rotation_delta_b_*Eigen::Vector3d(r_S*cos((1+2*2)/3*pi),r_S*sin((1+2*2)/3*pi), 0);
+    vertices.push_back(temp);
+    // 角点3
+    temp = p_body.pos +  obj_[0].rotation*rotation_delta_b_*Eigen::Vector3d(r_S*cos((1+2*3)/3*pi),r_S*sin((1+2*3)/3*pi), 0);
+    vertices.push_back(temp);
+    // 角点4
+    temp = p_end.pos +  obj_[0].rotation*rotation_delta_b_*Eigen::Vector3d(r_C*cos((1+2*1)/3*pi),r_C*sin((1+2*1)/3*pi), l_C);
+    vertices.push_back(temp);
+    // 角点5
+    temp = p_end.pos +  obj_[0].rotation*rotation_delta_b_*Eigen::Vector3d(r_C*cos((1+2*2)/3*pi),r_C*sin((1+2*2)/3*pi), l_C);
+    vertices.push_back(temp);
+    // 角点6
+    temp = p_end.pos +  obj_[0].rotation*rotation_delta_b_*Eigen::Vector3d(r_C*cos((1+2*3)/3*pi),r_C*sin((1+2*3)/3*pi), l_C);
+    vertices.push_back(temp);
+
+    // std::cout << "------------角点计算----------" << std::endl;
+
+    // 检查碰撞
+    for (size_t i = 0; i < envir_.size(); i++)
+    {
+        vector<shape> ts1;
+        ts1.resize(envir_[i].size());
+        for (size_t j = 0; j < ts1.size(); j++)
+        {
+            ts1[j].x = envir_[i][j][0];
+            ts1[j].y = envir_[i][j][1];
+            ts1[j].z = envir_[i][j][2];
+        }
+        vector<shape> cs1_1;
+        cs1_1.resize(vertices.size());
+        for (size_t j = 0; j < cs1_1.size(); j++)
+        {
+            cs1_1[j].x = vertices[j][0];
+            cs1_1[j].y = vertices[j][1];
+            cs1_1[j].z = vertices[j][2];
+        }
+        int dim_ts = envir_[i].size();
+        int dim_cs1_1 = vertices.size();
+        if (gjk(&ts1[0], &cs1_1[0], dim_ts, dim_cs1_1))
+        {
+            std::cout << "------------+++1----------" << std::endl;
+            print_covex_hub(envir_[i]);
+            std::cout << "---------------------------" << std::endl;
+            print_covex_hub(vertices);
+           if (!(obs_set_[i].term_left[0] == 0.0 && obs_set_[i].term_left[1] == 0.0 && obs_set_[i].term_left[2] == 0.0 ) )// 如果前面发生碰撞了
+           {// 需要更新右值
+                obs_set_[i].term_right = p_end.pos;
+           }
+           else
+           {// 之前，没有碰撞过。需要更新左值和右值
+                // std::cout << "------------+++2----------" << std::endl;
+                obs_set_[i].is_collision = true;
+                obs_set_[i].was_collision = true;
+                obs_set_[i].term_left = p_end.pos;
+                obs_set_[i].term_right = p_end.pos;
+                obs_set_[i].center = Eigen::Vector3d(0.0,0.0,0.0);
+                for (int j = 0;  j< envir_[i].size(); j++)
+                {
+                    obs_set_[i].center = obs_set_[i].center  + envir_[i][j];
+                }
+                 obs_set_[i].center = (1/envir_[i].size()) * obs_set_[i].center;
+           }
+        } 
+    }
+    // std::cout << "------------碰撞计算----------" << std::endl;
+}
+
+
+// bool end_effector_planning::gjk_calculate(vector<Eigen::Vector3d> obj1, vector<Eigen::Vector3d> obj2)
+// {
+//     vector<shape> ts1;
+//     ts1.resize(obj1.size());
+//     for (size_t i = 0; i < ts1.size(); i++)
+//     {
+//         ts1[i].x = obj1[i][0];
+//         ts1[i].y = obj1[i][1];
+//         ts1[i].z = obj1[i][2];
+//     }
+//     vector<shape> cs1_1;
+//     cs1_1.resize(obj2.size());
+//     for (size_t i = 0; i < cs1_1.size(); i++)
+//     {
+//         cs1_1[i].x = obj2[i][0];
+//         cs1_1[i].y = obj2[i][1];
+//         cs1_1[i].z = obj2[i][2];
+//     }
+//     int dim_ts = obj1.size();
+//     int dim_cs1_1 = obj2.size();
+//    return  gjk(ts1, cs1_1, dim_ts, dim_cs1_1);
+// }
+
 
 

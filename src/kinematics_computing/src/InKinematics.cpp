@@ -63,15 +63,17 @@ Inverse_Kinematics_Talker::Inverse_Kinematics_Talker(int argc, char** argv){
 		ROS_ERROR("Something is wrong with ROS. Will keep trying...");
 
 	// to gazebo
-  	joint_gazebo_pub1 = nh_.advertise<std_msgs::Float32>("/joint/delta_1/position_cmd", 1000);
-  	joint_gazebo_pub2 = nh_.advertise<std_msgs::Float32>("/joint/delta_2/position_cmd", 1000);
-  	joint_gazebo_pub3 = nh_.advertise<std_msgs::Float32>("/joint/delta_3/position_cmd", 1000);
+  	joint_gazebo_pub1 = nh_.advertise<std_msgs::Float32>("/joint/1/position_cmd", 1000);
+  	joint_gazebo_pub2 = nh_.advertise<std_msgs::Float32>("/joint/2/position_cmd", 1000);
+  	joint_gazebo_pub3 = nh_.advertise<std_msgs::Float32>("/joint/3/position_cmd", 1000);
+
 
 	// to rviz
   	state_pub = nh_.advertise<sensor_msgs::JointState>("joint_states", 1000);
 
 
   	endEffe_sub = nh_.subscribe("/traj/rel_posi", 1, &Inverse_Kinematics_Talker::endEffe_sub_cb, this);
+
 
   	theta1_=0;
   	theta2_=0;
@@ -117,3 +119,6 @@ void Inverse_Kinematics_Talker::endEffe_sub_cb(const geometry_msgs::Point& msg){
 	desiredPos.setValue(msg.x,msg.y,msg.z);
 
 }
+
+
+

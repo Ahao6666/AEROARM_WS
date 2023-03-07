@@ -22,7 +22,12 @@ bool trajectory_solver::trajectory_solver_QP()
 {
     get_matrix_quadratic_form();
     get_constraint_QP();
-
+    // std::cout<<"--------------A_matrix---------------"<<std::endl;
+    // std::cout<<A_matrix_<<std::endl;
+    // std::cout<<"--------------upp_vector_---------------"<<std::endl;
+    // std::cout<<upp_vector_<<std::endl;
+    // std::cout<<"--------------low_vector_---------------"<<std::endl;
+    // std::cout<<low_vector_<<std::endl;
     csc temp_Q;
     matrix_upptriangular(quad_matrix_, quad_matrix_);
     matrix_to_csc trans_mat_csc(quad_matrix_,temp_Q);

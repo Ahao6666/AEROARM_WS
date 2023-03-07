@@ -1,9 +1,9 @@
 <launch>   
     <node name="clik"  pkg="clik" type="clik" output="screen">
-        <param name="yaw_offset" type="double" value="-1.571589"/>
-        <param name="x_offset" type="double" value="0.010374"/>
-        <param name="y_offset" type="double" value="-0.026177"/> 
-        <param name="z_offset" type="double" value="0.140462"/> 
+        <param name="yaw_offset" type="double" value="-0.107039"/>
+        <param name="x_offset" type="double" value="0.039051"/>
+        <param name="y_offset" type="double" value="0.011513"/> 
+        <param name="z_offset" type="double" value="0.210544"/> 
         <param name="x_min" type="double" value="-4"/>
         <param name="x_max" type="double" value="4"/>
         <param name="y_min" type="double" value="-3"/>

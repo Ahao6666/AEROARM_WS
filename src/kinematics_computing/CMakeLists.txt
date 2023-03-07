@@ -8,7 +8,6 @@ find_package(catkin REQUIRED COMPONENTS
   std_msgs
   geometry_msgs
   sensor_msgs
-  sim2real
 )
 
 catkin_package(
@@ -17,7 +16,7 @@ catkin_package(
 
 
 include_directories(
-  include
+# include
   ${catkin_INCLUDE_DIRS}
 )
 

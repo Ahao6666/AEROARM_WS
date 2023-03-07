@@ -5,35 +5,19 @@ auto_pick::auto_pick(/* args */)
     // 【服务】调取指定时间的期望轨迹，如果超过轨迹的时间域，则为终点值。
     traj_result_server = nh_.advertiseService("trajectory_result", &auto_pick::traj_out_call,this);
     end_result_server = nh_.advertiseService("end_effector_result", &auto_pick::end_out_call,this);
-    // get load package state client
-    // ros::ServiceClient get_model_state_client_ = nh_.serviceClient<gazebo_msgs::GetModelState>(
-		// "/gazebo/get_model_state");
-	// geometry_msgs::Point payload_pos_;    // {float64 x, float64 y, float z}
-    //get the 'payload box' model state from gazebo
-    // get_model_state_srv_msg_.request.model_name = "payload box";
-    // get_model_state_srv_msg_.request.relative_entity_name = "link";
-    // "link" is the entity name when I add a pv_car in gazebo
-    // get_model_state_client_.call(get_model_state_srv_msg_);
-    // std::cout<<"payload box z:"<<get_model_state_srv_msg_.response.pose.position.z<<std::endl;
+    tool_chatter_pub = nh_.advertise<std_msgs::String>("chatter_tool", 1000);
     double yaw_offset;
     nh_.param<double>("/clik/yaw_offset_",yaw_offset_,-1.571589f);
     nh_.param<double>("/clik/x_offset",delta_offset_(0),0.010374f);
     nh_.param<double>("/clik/y_offset",delta_offset_(1),-0.026177f);
     nh_.param<double>("/clik/z_offset",delta_offset_(2),0.140462f);
     rotation_delta_b_ << sin(yaw_offset_), cos(yaw_offset_), 0, cos(yaw_offset_), sin(yaw_offset_), 0, 0, 0, -1;
-    nh_.param<double>("/task_plan/time_reach_space",time_reach_,20.0f);
-    nh_.param<double>("/task_plan/time_to_contact",time_contact_,14.0f);
-    nh_.param<double>("/task_plan/time_to_hold",time_hold_,8.0f);
-    nh_.param<double>("/task_plan/time_from_end_2_object",time_cnt_,1.0f);
+    nh_.param<double>("/task_plan/time_to_hold",time_hold_,2.0f);
     nh_.param<double>("/task_plan/velocity_to_reach",vel_reach_,0.02f);
     nh_.param<double>("/task_plan/velocity_to_reach",acc_reach_,0.1f);
-    nh_.param<double>("/task_plan/velocity_begin_contact",vel_cont_,0.3f);
-    nh_.param<double>("/task_plan/rate_scale_cont_reach",rate_cont_reach_,2.0f);
 
     nh_.param<double>("/task_plan/vel_end_effector",vel_end_,0.5f);
     nh_.param<double>("/task_plan/acc_end_effector",acc_end_,1.0f);
-    nh_.param<double>("/task_plan/length_to_cont",leng_cnt_, 0.03f);
-    nh_.param<double>("/task_plan/vel_to_contact",vel_cnt_,0.02f);
     
 
     // 读取目标位置和方向
@@ -52,15 +36,19 @@ auto_pick::auto_pick(/* args */)
     nh_.getParam("/auto_pick/corridor",corridor_load);
     // 读取安全通道信息
     get_path_cooridor(start_load, end_load, num_poly_load, corridor_load);
-    hold_manipulator_set_ << 0, 0, -0.22;
+    hold_manipulator_set_ << 0, 0, -0.14;
     hold_manipulator_set_ = rotation_delta_b_*hold_manipulator_set_ + delta_offset_;
-     // 计算预接触点
+    // 读取障碍物信息
+    XmlRpc::XmlRpcValue obstacle_load;
+    nh_.getParam("/auto_pick/obstacle",obstacle_load);
+    get_obstalces(obstacle_load);
+    // 计算预接触点
     cont_end_pt_.resize(num_objects_);
     for (size_t i = 0; i < num_objects_; i++)
     {
-        cont_end_pt_[i].pos = objects_[i].pos - leng_cnt_ * objects_[i].rotation * Eigen::Vector3d(0,0,1);//Eigen::Vector3d(1.5,1.5,-1);//
+        cont_end_pt_[i].pos = objects_[i].pos ;//Eigen::Vector3d(1.5,1.5,-1);//
         cont_end_pt_[i].acc = Eigen::Vector3d(0,0,0);
-        cont_end_pt_[i].vel = vel_cnt_ * Eigen::Vector3d(0,0,1);//Eigen::Vector3d(0,0,0);//
+        cont_end_pt_[i].vel =  Eigen::Vector3d(0,0,0);//Eigen::Vector3d(0,0,0);//
     }
 
     set_work_space(Eigen::MatrixXd::Identity(3,3),
@@ -81,19 +69,12 @@ void auto_pick::set_work_space(Eigen::MatrixXd A_w, Eigen::VectorXd b_u_w,
 bool auto_pick::traj_out_call(task_plan::traj_out_msgRequest& request,task_plan::traj_out_msgResponse& response)
 {
     // time align
-    // TODO: add a function to jurge time interval: the current time and the last time.
-    // if Dtime > X, then task_begin_flag_ = false.
-
-    
-
-
-    if (!task_begin_flag_ )
+    if (!task_begin_flag_)
     {
         task_begin_flag_ = true;
         flying_plan_.time_align();
         time_align_for_end();// 这个时候计算早结束了，只是用于修改调用时间
         ROS_INFO("Trajectory of the quadcopter is sending!");
-        // TODO:
     }
     
     path_point traj_sp;
@@ -124,7 +105,7 @@ bool auto_pick::end_out_call(task_plan::traj_out_msgRequest& request,task_plan::
         for (size_t i = 0; i < num_objects_; i++)
         {
             if ((request.times.toSec() > ini_end_st_[i].time_begin.toSec()) &&
-            (request.times.toSec() < ini_end_st_[i].time_begin.toSec() + constrant_manipulation_[i].s_scale + time_cnt_ +  time_hold_))
+            (request.times.toSec() < ini_end_st_[i].time_begin.toSec() + constrant_manipulation_[i].s_scale   +  time_hold_))
             {
                 end_plan_[i].trajectory_out(request.times, traj_sp);
                 response.flag_begin = true;
@@ -144,17 +125,35 @@ bool auto_pick::end_out_call(task_plan::traj_out_msgRequest& request,task_plan::
             }
         }   
     }
+    for (size_t i = 0; i < num_objects_; i++) //更新
+    {
+
+        if ( (ros::Time::now() <gripper_open_time_[i]) & (ros::Time::now() > gripper_open_time_[i] -ros::Duration(0.5)) )
+        {
+        // 控制机械抓
+            std_msgs::String char2tool;
+            std::stringstream temp;
+            temp <<  "A111";
+            char2tool.data = temp.str();
+            tool_chatter_pub.publish(char2tool);
+            std:: cout << "机械抓抓取！" <<std::endl;
+        }
+    } 
+   
+    
     return 1;
 }
 
 void auto_pick::time_align_for_end()
 {
     vector<bezier> bezier_3d;
+    gripper_open_time_.clear();
     flying_plan_.bezier_result_out(bezier_3d);// 调取飞行平台轨迹的结果
     for (size_t i = 0; i < num_objects_; i++) //更新
     {
-        ini_end_st_[i].time_begin = bezier_3d[index_obj_reach_[i]].times;
+        ini_end_st_[i].time_begin = bezier_3d[index_obj_reach_[i]].times - ros::Duration(constrant_manipulation_[i].s_scale );
         end_plan_[i].time_align(ini_end_st_[i].time_begin);
+        gripper_open_time_.push_back(bezier_3d[index_obj_reach_[i]].times);
     } 
 }
 
@@ -187,35 +186,22 @@ void auto_pick::get_object_vector(XmlRpc::XmlRpcValue &position,XmlRpc::XmlRpcVa
 
 void auto_pick::generate_reachable_space()
 {
-    contact_begin_space_.clear();
     reachable_space_.clear();
     Eigen::Vector3d dst_end_quad = rotation_delta_b_ * workspace_.center + delta_offset_;
     for (size_t i = 0; i < num_objects_; i++)
     {
         constraint temp;
-        temp.s_scale = time_reach_;
+        temp.s_scale = time_hold_ + 2.0;
         temp.upper_vel = vel_reach_*Eigen::Vector3d(1,1,1);
         temp.lower_vel  = vel_reach_*Eigen::Vector3d(-1,-1,-1);
         temp.upper_acc = acc_reach_*Eigen::Vector3d(1,1,1);
         temp.lower_acc = vel_reach_*Eigen::Vector3d(-1,-1,-1);
         temp.A_pos.setIdentity(3,3);
         temp.b_u_pos.resize(3);
-        temp.b_u_pos = cont_end_pt_[i].pos - dst_end_quad + 0.5*(workspace_.b_u_w - workspace_.center);
+        temp.b_u_pos = cont_end_pt_[i].pos - objects_[i].rotation*dst_end_quad + 1.0*(workspace_.b_u_w - workspace_.center);
         temp.b_l_pos.resize(3);
-        temp.b_l_pos  = cont_end_pt_[i].pos - dst_end_quad + 0.5*(workspace_.b_l_w  - workspace_.center);
+        temp.b_l_pos  = cont_end_pt_[i].pos - objects_[i].rotation*dst_end_quad + 1.0*(workspace_.b_l_w  - workspace_.center);
         reachable_space_.push_back(temp);
-        constraint temp_cont;
-        temp_cont.s_scale = time_contact_;
-        temp_cont.upper_vel << vel_reach_*Eigen::Vector3d(1,1,1);
-        temp_cont.lower_vel << vel_reach_*Eigen::Vector3d(-1,-1,-1);
-        temp_cont.upper_acc << acc_reach_*Eigen::Vector3d(1,1,1);
-        temp_cont.lower_acc << vel_reach_*Eigen::Vector3d(-1,-1,-1);
-        temp_cont.A_pos.setIdentity(3,3);
-        temp_cont.b_u_pos.resize(3);
-        temp_cont.b_u_pos = cont_end_pt_[i].pos - dst_end_quad + rate_cont_reach_ * (workspace_.b_u_w - workspace_.center);
-        temp_cont.b_l_pos.resize(3);
-        temp_cont.b_l_pos  = cont_end_pt_[i].pos - dst_end_quad + rate_cont_reach_ * (workspace_.b_l_w - workspace_.center);
-        contact_begin_space_.push_back(temp_cont);
     }
 }
 
@@ -256,10 +242,8 @@ void auto_pick::corridor_management()
         {
             if (i== temp_object_in_polyhedron[j])
             {
-                corridor_.push_back(contact_begin_space_[j]);
                 corridor_.push_back(reachable_space_[j]);
                 index_obj_reach_.push_back(corridor_.size() - 1);
-                corridor_.push_back(contact_begin_space_[j]);
                 corridor_.push_back(corridor_rev_[i]);
             }
         }
@@ -275,6 +259,24 @@ void auto_pick::show_corridor()
     }
     
 }
+
+void auto_pick::calculate_initial_end(ros::Time time_in, pick_object po_in, ini_end_effector& out_ini)
+{
+    out_ini.time_begin = time_in;
+    flying_plan_.trajectory_out(out_ini.time_begin, out_ini.pt);
+    Eigen::Vector3d r_g(po_in.rotation(0,0), po_in.rotation(1,0),  po_in.rotation(2,0));
+    Eigen::Vector3d r3 = out_ini.pt.acc + Eigen::Vector3d(0,0,9.8);
+    r3 = 1 / r3.norm()  * r3 ;
+    Eigen::Vector3d r2 = r3.cross(r_g);
+    r2 =  1 / r2.norm()  * r2 ;
+    Eigen::Vector3d r1 = r2.cross(r3);
+    Eigen:: Matrix3d R;
+    R<< r1,r2,r3;
+
+    out_ini.pt.pos = out_ini.pt.pos + R * hold_manipulator_set_;
+
+}
+
 void auto_pick::solver_for_trajectory()
 {
     // 计算飞行平台的轨迹
@@ -289,15 +291,16 @@ void auto_pick::solver_for_trajectory()
     
     // 计算末端轨迹的初始状态
     ini_end_st_.clear();
+    double  during_B_G = 4.0 * 4.0 / 2.0;
     ini_end_effector temp_sta;
     vector<bezier> bezier_3d;
     flying_plan_.bezier_result_out(bezier_3d);
     cout << "number of the objects is " << num_objects_ << std::endl;
     for (size_t i = 0; i < num_objects_; i++)
     {
-        temp_sta.time_begin = bezier_3d[index_obj_reach_[i]].times;
-        flying_plan_.trajectory_out(temp_sta.time_begin, temp_sta.pt);
-        temp_sta.pt.pos = temp_sta.pt.pos + hold_manipulator_set_;
+        
+        temp_sta.time_begin = bezier_3d[index_obj_reach_[i]].times - ros::Duration(during_B_G);
+        calculate_initial_end(temp_sta.time_begin, objects_[i], temp_sta);
         ini_end_st_.push_back(temp_sta);//这个时候的初始时间没有什么意义
     }
     
@@ -310,7 +313,7 @@ void auto_pick::solver_for_trajectory()
     constraint cons_temp;
     for (size_t i = 0; i < num_objects_; i++)
     {
-        cons_temp.s_scale = 8.0 - time_cnt_;
+        cons_temp.s_scale = during_B_G;
         cons_temp.upper_vel = vel_end_  * Eigen::Vector3d(1,1,1);
         cons_temp.lower_vel  = -vel_end_  * Eigen::Vector3d(1,1,1);
         cons_temp.upper_acc = acc_end_  * Eigen::Vector3d(1,1,1);
@@ -340,8 +343,30 @@ void auto_pick::solver_for_trajectory()
         // std::cout << constrant_manipulation_[i].is_in( cont_end_pt_[i].pos) << std::endl;
         // std::cout << constrant_manipulation_[i].is_in( ini_end_st_[i].pt.pos) << std::endl;
 
+        // 拟合飞行平台数据
+        path_point temp_pp;
+        vector<Eigen::Vector3d> point_flying_base;
+        int order = 12;
+        for (size_t j = 0; j < order; j++)
+        {
+            ros::Time timeTem = ini_end_st_[i].time_begin + ros::Duration( j*constrant_manipulation_[i].s_scale/(order-1));
+            flying_plan_.trajectory_out(timeTem, temp_pp);
+            point_flying_base.push_back(temp_pp.pos);
+        }
+
+        vector<double> time_flying_base;
+        for (size_t j = 0; j < order; j++)
+        {
+            time_flying_base.push_back(j*constrant_manipulation_[i].s_scale/(order-1));
+        }
+        bezier  bezier_flying(12, during_B_G,  ini_end_st_[i].time_begin);
+        Berizer_fit(point_flying_base, time_flying_base,  bezier_flying);
+        
         // std::cout << "---------------------------------------------------" << std::endl;
-        end_plan_[i].get_objectives(objects_[i], cont_end_pt_[i],  vel_cnt_, time_cnt_);
+        end_plan_[i].get_objectives(objects_[i], time_hold_);
+        end_plan_[i].get_obstacles(envir_);
+        end_plan_[i].get_flying_bezier(bezier_flying);
+        end_plan_[i].get_manip_offset(rotation_delta_b_, delta_offset_);
         end_plan_[i].get_initial_states(ini_end_st_[i]);
         end_plan_[i].get_path_constraint(constrant_manipulation_[i]);
         end_plan_[i].trajectory_solver_QP();
@@ -422,11 +447,78 @@ void auto_pick::get_path_cooridor(XmlRpc::XmlRpcValue &start,XmlRpc::XmlRpcValue
         corridor_rev_.push_back(temp);
     }
 }
+ void auto_pick::get_obstalces(XmlRpc::XmlRpcValue &obstalces)
+ {
+    envir_.clear();
+    for (size_t i = 0; i < obstalces.size(); i++)
+    {
+        vector<Eigen::Vector3d> temp;
+        temp.clear();
+        for (size_t j = 0; j < obstalces[i]["points"].size(); j++)
+        {
+            temp.push_back(Eigen::Vector3d(obstalces[i]["points"][j][0], obstalces[i]["points"][j][1], obstalces[i]["points"][j][2]));
+        }
+        envir_.push_back(temp);
+    }
+ }
 
 void auto_pick::test()
 {
     solver_for_trajectory();
+    std:: cout << "计算已经结束" <<std::endl;
+    // 控制机械抓
+    std_msgs::String char2tool;
+    std::stringstream temp;
+    temp <<  "A110";
+    char2tool.data = temp.str();
+    tool_chatter_pub.publish(char2tool);
+    std:: cout << "机械抓电磁铁打开！" <<std::endl;
 }
+
+bool auto_pick::Berizer_fit(vector<Eigen::Vector3d> P, vector<double> t,  bezier& bezier_flying)
+{
+    int length = t.size();  //向量长度
+    int order = bezier_flying.order;
+    double tau;         //tau系数，与时间有关
+    double binomial_coff;   //二项式系数，为C(n,i)
+    Eigen::MatrixXd B(order+1, length);
+    //构建B矩阵
+    for(int i=0; i<length; i++){
+        tau = (t[i]-t[0]) / (t[length-1]-t[0]);
+        for(int j = 0; j<=order; j++){
+            binomial_coff = factorial(order) / (factorial(j) * factorial(order-j));
+            B(j,i) = binomial_coff * pow(tau,j) * pow((1-tau),(order-j));
+        }
+    }
+    // std::cout<<B<<std::endl;
+    Eigen::MatrixXd B_inv = pseudoInverse(B);   //求B矩阵的伪逆
+    // std::cout<<B_inv<<std::endl;
+    
+    // 将P从向量转化为矩阵,用于相乘
+    Eigen::MatrixXd P_matrix(3,length);
+    for(int i=0; i<3; i++){
+        for(int j = 0; j<length; j++){
+            P_matrix(i,j) = P[j][i];
+        }
+    }
+
+    Eigen::MatrixXd C(3,order+1);  //最终需要的C矩阵
+    C = P_matrix * B_inv;
+
+    for (size_t i = 0; i < order+1; i++)
+    {
+        bezier_flying.coef_x[i] = C(0,i);
+    }
+    for (size_t i = 0; i < order+1; i++)
+    {
+        bezier_flying.coef_y[i] = C(1,i);
+    }
+    for (size_t i = 0; i < order+1; i++)
+    {
+        bezier_flying.coef_z[i] = C(2,i);
+    }
+}
+
 
 int main(int argc, char *argv[])
 {
