@@ -21,7 +21,7 @@ sim2realclass::sim2realclass()
     // 发送末端位置指令
     endEffe_traj_pub_  = nh.advertise<geometry_msgs::Point>("/traj/rel_posi", 1); 
     // 发送gripper指令
-    gripper_cmd_pub_  = nh.advertise<sim2real::gripper_cmd>("/gripper_cmd", 1); 
+    gripper_cmd_pub_  = nh.advertise<sim2real::gripper_cmd>("/gripper_cmd", 1);   //发布了但没有使用
   	joint_gripper_gazebo_pub1 = nh.advertise<std_msgs::Float32>("/joint/gripper1_1/position_cmd", 10);
   	joint_gripper_gazebo_pub2 = nh.advertise<std_msgs::Float32>("/joint/gripper1_2/position_cmd", 10);
     // 设置DELTA关节初始值

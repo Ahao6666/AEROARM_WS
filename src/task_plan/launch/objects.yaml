@@ -3,7 +3,7 @@
 number_objects: 1
 # Positions of the objects (m)
 position:
-- [0.0, -2.0, -0.8]
+- [0.0, -2.0, -0.43]
 # Constrant angles of the objects (rad)
 constrant_angle: [0.17]
 # Attitude angles of the objects (rad)
