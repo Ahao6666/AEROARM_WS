@@ -28,7 +28,6 @@
 #include <sensor_msgs/Joy.h>
 #include <mavros_msgs/CommandBool.h>
 #include <mavros_msgs/State.h>
-#include <mavros_msgs/SetMode.h>
 /*****************************************************************************
 ** Namespaces
 *****************************************************************************/

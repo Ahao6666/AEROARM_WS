@@ -11,7 +11,7 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 ##############################################################################
 
 # qt_build provides the qt cmake glue, roscpp the comms for a default talker
-find_package(catkin REQUIRED COMPONENTS qt_build roscpp mavros_msgs)
+find_package(catkin REQUIRED COMPONENTS roscpp mavros_msgs)
 include_directories(${catkin_INCLUDE_DIRS})
 
 # add

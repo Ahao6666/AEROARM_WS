@@ -79,10 +79,7 @@ namespace qt_joystick {
       joy_msg.buttons.emplace_back(Send_data_[5]);
       joy_publisher.publish(joy_msg);
 
-      mavros_msgs::SetMode land_set_mode;
-      land_set_mode.request.custom_mode = "MANUAL";
       mavros_msgs::CommandBool arm_cmd;
-      mavros_msgs::CommandBool land_cmd;
       if( !current_state.armed && abs(Send_data_[5]) > 0.9){
           arm_cmd.request.value = true;
           arming_client.call(arm_cmd);
