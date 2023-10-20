@@ -18,47 +18,59 @@
 - `cd catkin_ws/src/rviz_package`
 - `roslaunch delta_rviz.launch`
 
-
 # single-agent simulation
 
 ## start simulator
+
 - `roslaunch px4 posix_sitl.launch`
 
 ## get connection
-- `cd catkin_ws`
+
+- `cd AEROARM_ws`
 - `roslaunch robot_connection.launch`
 
 ## start task_plan
+
 - `~/catkin_ws/src/task_plan/launch`
 - `roslaunch task_plan.launch`
 
 ## open QGC
+
 - `cd Download`
 - `./QGroundControl.AppImage `
-there need to `arm the rotor` and `switch the mode to offboard`
+  there need to `arm the rotor` and `switch the mode to offboard`
+
+## open qt_joystick
+- `rosrun qt_joystick qt_joystick`
+- 点击`connect`手动连接
 
 ## publish setpoint position (50 Hz)
+
 - `rostopic pub -r 50 /mavros/setpoint_position/local geometry_msgs/PoseStamped "header: XXX`
-or
+  or
 - `rosrun off_mission single_agent_circle_mission`
 
-第一步：启动GAZEBO仿真后，在地面站手动电机解锁
+第一步：启动GAZEBO仿真后，在地面站手动电机解锁，SE开关在Takeoff and Hover模式下
 
-第二步：SC拨杆分别为manual/position/offboard模式，切换至offboard模式
+第二步：SC拨杆分别为manual/position/offboard模式，切换至offboard模式，无人机上升随后悬停
 
-第三步：SE拨杆至2档位，进入Online模式
+第三步：SE拨杆至拨至Path档位下，进入online模式
 
 第四步：在offboard+Online模式下，SB拨杆用于执行飞行任务，同时自主控制Detla机械臂
 
 第五步：SA开关用于独立控制Delta机械臂
 
 # multi-agent simualtion
+
 ## start simulator
+
 - `roslaunch px4 multi_uav_aeroarm.launch`
 
 ## open QGC
+
 - `cd Download`
 - `./QGroundControl.AppImage `
 
 ## start multi_agent_circle mission
+
 - `rosrun off_mission multi_agent_circle_mission`
