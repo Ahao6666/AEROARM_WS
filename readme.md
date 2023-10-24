@@ -18,28 +18,37 @@
 - `cd catkin_ws/src/rviz_package`
 - `roslaunch delta_rviz.launch`
 
-
 # single-agent simulation
 
 ## start simulator
+
 - `roslaunch px4 posix_sitl.launch`
 
 ## get connection
+
 - `cd catkin_ws`
 - `roslaunch robot_connection.launch`
 
 ## start task_plan
+
 - `~/catkin_ws/src/task_plan/launch`
 - `roslaunch task_plan.launch`
 
 ## open QGC
+
 - `cd Download`
 - `./QGroundControl.AppImage `
-there need to `arm the rotor` and `switch the mode to offboard`
+  there need to `arm the rotor` and `switch the mode to offboard`
+
+## open Joystick
+
+- `rosrun qt_joystick qt_joystick`
+  Click on the `connect` button
 
 ## publish setpoint position (50 Hz)
+
 - `rostopic pub -r 50 /mavros/setpoint_position/local geometry_msgs/PoseStamped "header: XXX`
-or
+  or
 - `rosrun off_mission single_agent_circle_mission`
 
 第一步：启动GAZEBO仿真后，在地面站手动电机解锁
@@ -52,13 +61,6 @@ or
 
 第五步：SA开关用于独立控制Delta机械臂
 
-# multi-agent simualtion
-## start simulator
-- `roslaunch px4 multi_uav_aeroarm.launch`
+## Other functions 
 
-## open QGC
-- `cd Download`
-- `./QGroundControl.AppImage `
-
-## start multi_agent_circle mission
-- `rosrun off_mission multi_agent_circle_mission`
+1. floating platform move: `rosrun Gazebo_RL floating_platform`
