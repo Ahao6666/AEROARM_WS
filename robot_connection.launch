@@ -24,16 +24,7 @@
       <arg name="respawn_mavros" default="$(arg respawn_mavros)" />
   </include>
 
-  <node pkg="kinematics_computing" name="kinematics_talker" type="Joint_Talker"  output="screen">
-  </node>
   <node pkg="sim2real" name="sim2real" type="sim_to_real" output="screen">
   </node>
 
-  <node pkg="joy" name="joy" type="joy_node">
-    <param name ="dev" type="string" value="/dev/input/js0" />
-    <param name = "autorepeat_rate"  type="double"  value="50.0"/>
-  </node>
-
-  <include file="$(find clik)/launch/clik.launch">
-  </include>
 </launch>
