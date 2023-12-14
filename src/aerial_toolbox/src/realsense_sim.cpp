@@ -1,5 +1,7 @@
 #include <ros/ros.h>
 #include <geometry_msgs/PoseStamped.h>
+#include <geometry_msgs/TransformStamped.h>
+#include <gazebo_msgs/GetLinkState.h>
 #include <eigen3/Eigen/Dense>
 #include <tf2/LinearMath/Quaternion.h>
 #include <tf2/LinearMath/Matrix3x3.h>
@@ -14,7 +16,9 @@ Eigen::Matrix3f air_toolbox_mat;
 Eigen::Matrix3f air_manipulator_mat;
 
 void air_toolbox_Callback(const geometry_msgs::PoseStamped::ConstPtr &msg){
-    air_toolbox_data.pose = msg->pose;
+    air_toolbox_data.pose.position.x = msg->pose.position.x;
+    air_toolbox_data.pose.position.y = msg->pose.position.y;
+    air_toolbox_data.pose.position.z = msg->pose.position.z + 0.2;
     Eigen::Quaternionf q;
     q.x() = msg->pose.orientation.x;
     q.y() = msg->pose.orientation.y;
@@ -24,7 +28,9 @@ void air_toolbox_Callback(const geometry_msgs::PoseStamped::ConstPtr &msg){
 }
 
 void air_manipulator_Callback(const geometry_msgs::PoseStamped::ConstPtr &msg){
-    air_manipulator_data.pose = msg->pose;
+    air_manipulator_data.pose.position.x = msg->pose.position.x;
+    air_manipulator_data.pose.position.y = msg->pose.position.y;
+    air_manipulator_data.pose.position.z = msg->pose.position.z + 0.8;
     Eigen::Quaternionf q;
     q.x() = msg->pose.orientation.x;
     q.y() = msg->pose.orientation.y;
@@ -44,13 +50,16 @@ int main(int argc, char **argv){
     // 发送工具箱相对于上方无人机的位置
     ros::Publisher toolbox_pub  = nh.advertise<aerial_toolbox::toolbox_array>("/tool_box_pos", 10);
 
+    ros::ServiceClient getlinkstate_client = nh.serviceClient<gazebo_msgs::GetLinkState>("/gazebo/get_link_state");
+    gazebo_msgs::GetLinkState tool_state_srv;
+    tool_state_srv.request.reference_frame = "iris::FlyingDelta::base_link";
     //================Set target point=================
-    std::vector<Eigen::Vector3d,Eigen::aligned_allocator<Eigen::Vector3d>> toolbox_points;
+    std::vector<Eigen::Vector3d> toolbox_points;
     toolbox_points.resize(4);
-    toolbox_points[0] = Eigen::Vector3d(0.0735,0.0735,0);
-    toolbox_points[1] = Eigen::Vector3d(0.0735,-0.0735,0);  
-    toolbox_points[2] = Eigen::Vector3d(-0.0735,-0.0735,0);
-    toolbox_points[3] = Eigen::Vector3d(-0.0735,0.0735,0);
+    toolbox_points[0] = Eigen::Vector3d(-0.0735,0.0735,0);
+    toolbox_points[1] = Eigen::Vector3d(0.0735,0.0735,0);  
+    toolbox_points[2] = Eigen::Vector3d(0.0735,-0.0735,0);
+    toolbox_points[3] = Eigen::Vector3d(-0.0735,-0.0735,0);
     //=================================================
     
     ros::Rate rate(20.0);
@@ -75,7 +84,6 @@ int main(int argc, char **argv){
             toolbox_arr.tools[tool_id].position[0] = target_tool(0);
             toolbox_arr.tools[tool_id].position[1] = target_tool(1);
             toolbox_arr.tools[tool_id].position[2] = target_tool(2);
-
             toolbox_arr.tools[tool_id].orientation[0] = q_mani_to_toolbox.w();
             toolbox_arr.tools[tool_id].orientation[1] = q_mani_to_toolbox.x();
             toolbox_arr.tools[tool_id].orientation[2] = q_mani_to_toolbox.y();
@@ -86,10 +94,27 @@ int main(int argc, char **argv){
             toolbox_arr.tools[tool_id].z_vec[2] = air_toolbox_mat.col(2)(2);
             toolbox_arr.tools[tool_id].detected_num = 10;
 
-        }  //end 4 tools        
+            tool_state_srv.request.link_name = "tool_" + to_string(tool_id);
+            if(getlinkstate_client.call(tool_state_srv)){
+                ROS_INFO("%d tool position error:\t%f,\t%f,\t%f", tool_id, toolbox_arr.tools[tool_id].position[0]-tool_state_srv.response.link_state.pose.position.x,
+                    toolbox_arr.tools[tool_id].position[1]-tool_state_srv.response.link_state.pose.position.y,
+                    toolbox_arr.tools[tool_id].position[2]-tool_state_srv.response.link_state.pose.position.z);
+            }
+            else
+                cout<<"failed to get link state!";
+            // ROS_INFO("%d tool oritation:\t%f,\t%f,\t%f,\t%f", tool_id, toolbox_arr.tools[tool_id].orientation[0],
+            //     toolbox_arr.tools[tool_id].orientation[1],
+            //     toolbox_arr.tools[tool_id].orientation[2],
+            //     toolbox_arr.tools[tool_id].orientation[3]);
+            // ROS_INFO("%d tool z_vec:\t%f,\t%f,\t%f", tool_id, toolbox_arr.tools[tool_id].z_vec[0],
+            //     toolbox_arr.tools[tool_id].z_vec[1],
+            //     toolbox_arr.tools[tool_id].z_vec[2]);
+        }  //end 4 tools
+
         toolbox_pub.publish(toolbox_arr);
         ros::spinOnce();
         rate.sleep();
+
     }
     return 0;
 }
